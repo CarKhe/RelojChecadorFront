@@ -1,0 +1,12 @@
+mat-nav-list {
+  padding: 0;
+}
+
+a {
+  color: var(--mat-sys-on-surface-variant);
+  font-weight: 500;
+
+  &:hover {
+    background: var(--mat-sys-surface-container-high);
+  }
+}

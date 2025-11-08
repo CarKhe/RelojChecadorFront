@@ -1,0 +1,22 @@
+<mat-form-field appearance="outline" class="full-width">
+  <mat-label>{{ label }}</mat-label>
+  <input
+    matInput
+    [matDatepicker]="picker"
+    [formControl]="control"
+    placeholder="Selecciona fecha"
+  />
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+
+<!-- Campo de hora -->
+<mat-form-field appearance="outline" class="full-width">
+  <mat-label>Hora</mat-label>
+  <input
+    matInput
+    type="time"
+    [value]="currentTime"
+    (input)="updateTime($event)"
+  />
+</mat-form-field>

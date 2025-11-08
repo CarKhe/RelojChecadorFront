@@ -1,0 +1,10 @@
+<mat-form-field appearance="outline" class="full-width">
+  <mat-label>{{ label }}</mat-label>
+  <mat-select [formControl]="control">
+    @for (option of options; track option[valueField]) {
+      <mat-option [value]="option[valueField]">
+        {{ option[displayField] }}
+      </mat-option>
+    }
+  </mat-select>
+</mat-form-field>

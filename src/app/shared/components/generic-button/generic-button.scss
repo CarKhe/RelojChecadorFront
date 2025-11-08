@@ -1,0 +1,152 @@
+@use '@angular/material' as mat;
+
+.primary{
+  @include mat.fab-overrides((
+    container-color: var(--mat-sys-primary),
+    foreground-color: var( --mat-sys-on-primary),
+    small-container-color: var(--mat-sys-primary),
+    small-foreground-color: var(--mat-sys-on-primary)
+   
+  ));
+
+  @include mat.icon-button-overrides((
+    icon-color: var(--mat-sys-primary)
+    
+  ));
+
+  @include mat.button-overrides((
+    text-label-text-color: var(--mat-sys-primary),
+    filled-container-color: var(--mat-sys-primary),
+    outlined-label-text-color : var(--mat-sys-primary),
+    outlined-outline-color: var(--mat-sys-primary), 
+    tonal-label-text-color: var(--mat-sys-primary),
+  ));
+
+}
+.secondary{
+  @include mat.fab-overrides((
+    container-color: var(--mat-sys-secondary),
+    foreground-color: var( --mat-sys-on-secondary),
+    small-container-color: var(--mat-sys-secondary),
+    small-foreground-color: var(--mat-sys-on-secondary)
+  ));
+
+  @include mat.icon-button-overrides((
+    icon-color: var(--mat-sys-secondary)
+  ));
+
+  @include mat.button-overrides((
+    text-label-text-color: var(--mat-sys-secondary),
+    filled-container-color: var(--mat-sys-secondary),
+    outlined-label-text-color : var(--mat-sys-secondary),
+    outlined-outline-color: var(--mat-sys-secondary),   
+  ));
+
+}
+
+.tertiary{
+  @include mat.fab-overrides((
+    container-color: var(--mat-sys-tertiary),
+    foreground-color: var( --mat-sys-on-tertiary),
+    small-container-color: var(--mat-sys-tertiary),
+    small-foreground-color: var(--mat-sys-on-tertiary)
+  ));
+
+  @include mat.icon-button-overrides((
+    icon-color: var(--mat-sys-tertiary)
+  ));
+
+  @include mat.button-overrides((
+    text-label-text-color: var(--mat-sys-tertiary),
+    filled-container-color: var(--mat-sys-tertiary),
+    outlined-label-text-color : var(--mat-sys-tertiary),
+    outlined-outline-color: var(--mat-sys-tertiary),
+    
+  ));
+}
+
+.info{
+  @include mat.fab-overrides((
+    container-color: var(--mat-sys-info),
+    foreground-color: var( --mat-sys-on-info),
+    small-container-color: var(--mat-sys-info),
+    small-foreground-color: var(--mat-sys-on-info)
+  ));
+
+  @include mat.icon-button-overrides((
+    icon-color: var(--mat-sys-info)
+  ));
+
+  @include mat.button-overrides((
+    text-label-text-color: var(--mat-sys-info),
+    filled-container-color: var(--mat-sys-info),
+    outlined-label-text-color : var(--mat-sys-info),
+    outlined-outline-color: var(--mat-sys-info),    
+  ));
+}
+
+.warning{
+  @include mat.fab-overrides((
+    container-color: var(--mat-sys-warning),
+    foreground-color: var( --mat-sys-on-warning),
+    small-container-color: var(--mat-sys-warning),
+    small-foreground-color: var(--mat-sys-on-warning)
+  ));
+
+  @include mat.icon-button-overrides((
+    icon-color: var(--mat-sys-warning)
+  ));
+
+  @include mat.button-overrides((
+    text-label-text-color: var(--mat-sys-warning),
+    filled-container-color: var(--mat-sys-warning),
+    outlined-label-text-color : var(--mat-sys-warning),
+    outlined-outline-color: var(--mat-sys-warning),    
+  ));
+}
+
+.error{
+  @include mat.fab-overrides((
+    container-color: var(--mat-sys-error),
+    foreground-color: var( --mat-sys-on-error),
+    small-container-color: var(--mat-sys-error),
+    small-foreground-color: var(--mat-sys-on-error)
+  ));
+
+  @include mat.icon-button-overrides((
+    icon-color: var(--mat-sys-error)
+  ));
+
+  @include mat.button-overrides((
+    text-label-text-color: var(--mat-sys-error),
+    filled-container-color: var(--mat-sys-error),
+    outlined-label-text-color : var(--mat-sys-error),
+    outlined-outline-color: var(--mat-sys-error),    
+  ));
+}
+
+.success{
+  @include mat.fab-overrides((
+    container-color: var(--mat-sys-success),
+    foreground-color: var( --mat-sys-on-success),
+    small-container-color: var(--mat-sys-success),
+    small-foreground-color: var(--mat-sys-on-success),
+    
+  ));
+
+  @include mat.icon-button-overrides((
+    icon-color: var(--mat-sys-success)
+  ));
+
+  @include mat.button-overrides((
+    text-label-text-color: var(--mat-sys-success),
+    filled-container-color: var(--mat-sys-success),
+    outlined-label-text-color : var(--mat-sys-success),
+    outlined-outline-color: var(--mat-sys-success),
+    
+  ));
+}
+
+button {
+  margin: 4px;
+}

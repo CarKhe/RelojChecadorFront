@@ -1,0 +1,14 @@
+@if (show) {
+  <div class="loader-overlay">
+    <mat-progress-spinner
+      [mode]="mode"
+      [value]="value"
+      [diameter]="diameter"
+      color="primary">
+    </mat-progress-spinner>
+
+    @if (text) {
+      <p class="loader-text">{{ text }}</p>
+    }
+  </div>
+}

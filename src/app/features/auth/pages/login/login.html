@@ -1,0 +1,27 @@
+<div class="login-container">
+    <form [formGroup]="formulario" (ngSubmit)="login()">
+        <app-generic-card 
+            title="{{titulo | uppercase }}">
+            <div card-content>
+                <app-generic-input 
+                    label="Usuario"
+                    placeholder="Usuarios"
+                    controlName="user"/>
+
+                <app-generic-input 
+                    label="Contraseña"
+                    placeholder="Contraseña"
+                    type="password"
+                    controlName="pass"/>
+            </div>
+            <div card-botones #cardBotones >
+                <app-generic-button 
+                    label="Log In"
+                    color="primary"
+                    type="fab-extended"
+                    icon="login"/>
+            </div>
+        </app-generic-card>
+    </form>
+</div>
+

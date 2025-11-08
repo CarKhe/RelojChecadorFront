@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+
+<mat-dialog-content>
+  <p>{{ data.content }}</p>
+  <ng-content  *ngComponentOutlet="data.component"></ng-content>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+    @if(data.cancelText){
+        <app-generic-button
+            [label]="data.cancelText"
+            color="primary"
+            (click)="cerrar()" />
+    }
+
+    @if(data.confirmText){
+    <app-generic-button
+        [label]="data.confirmText"
+        color="primary"
+        (click)="confirmar()" />
+    }
+
+</mat-dialog-actions>

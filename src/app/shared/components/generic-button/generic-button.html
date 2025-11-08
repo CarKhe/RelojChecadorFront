@@ -1,0 +1,84 @@
+@switch (type) {
+    @case ('elevated') {
+        <button matButton="elevated" [ngClass]="color" [disabled]="disabled" (click)="onClick(emmit)">
+        @if (icon) {
+            <mat-icon>{{ icon }}</mat-icon>
+        }
+        {{ label | capitalize }}
+        </button>
+    }
+
+    @case ('outlined') {
+        <button matButton="outlined" [ngClass]="color" [disabled]="disabled" (click)="onClick(emmit)">
+        @if (icon) {
+            <mat-icon>{{ icon }}</mat-icon>
+        }
+        {{ label | capitalize }}
+        </button>
+    }
+
+    @case ('filled') {
+        <button matButton="filled" [ngClass]="color" [disabled]="disabled" (click)="onClick(emmit)">
+        @if (icon) {
+            <mat-icon>{{ icon }}</mat-icon>
+        }
+        {{ label | capitalize  }}
+        </button>
+    }
+
+    @case ('tonal') {
+        <button matButton="tonal" [ngClass]="color" [disabled]="disabled" (click)="onClick(emmit)">
+        @if (icon) {
+            <mat-icon>{{ icon }}</mat-icon>
+        }
+        {{ label | capitalize }}
+        </button>
+    }
+
+
+    @case ('icon') {
+        <button matIconButton  [ngClass]="color" [disabled]="disabled" (click)="onClick(emmit)">
+            <mat-icon>{{ icon }}</mat-icon>
+        </button>
+    }
+
+    @case ('fab') {
+        <button matFab [ngClass]="color" [disabled]="disabled" (click)="onClick(emmit)">
+        @if (icon) {
+            <mat-icon>{{ icon }}</mat-icon>
+        }
+        @else {
+            {{ label | capitalize }}
+        }
+        </button>
+    }
+
+    @case ('mini-fab') {
+        <button matMiniFab [ngClass]="color" [disabled]="disabled" (click)="onClick(emmit)">
+        @if (icon) {
+            <mat-icon>{{ icon }}</mat-icon>
+        }
+        @else {
+            {{ label | capitalize  }}
+        }
+        </button>
+    }
+
+    @case ('fab-extended') {
+        <button  matFab extended [ngClass]="color" [disabled]="disabled" (click)="onClick(emmit)">
+        @if (icon) {
+            <mat-icon>{{ icon }}</mat-icon>
+        }
+        {{ label | capitalize | truncate:20  }}
+        </button>
+    }
+
+    @default {
+        <button mat-button [ngClass]="color" [disabled]="disabled" (click)="onClick(emmit)">
+        @if (icon) {
+            <mat-icon>{{ icon }}</mat-icon>
+        }
+        {{ label | capitalize  }}
+        </button>
+    }
+}
