@@ -1,0 +1,18 @@
+<div class="avatar-container">
+  <div
+    class="avatar"
+    [style.width]="size"
+    [style.height]="size"
+    [style.background-color]="!src ? backgroundColor : 'transparent'"
+  >
+    @if (src) {
+      <img [src]="src" [alt]="alt" />
+    } @else {
+      <mat-icon [style.color]="iconColor" fontIcon="person"></mat-icon>
+    }
+  </div>
+
+  @if (name) {
+    <div class="avatar-name">{{ name }}</div>
+  }
+</div>

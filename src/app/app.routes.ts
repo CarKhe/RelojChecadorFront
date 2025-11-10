@@ -7,4 +7,9 @@ export const routes: Routes = [
         loadChildren: () =>
             import('./features/auth/auth-routing-module').then(m => m.AUTH_ROUTES)
     },
+    {
+        path: 'admin',
+        loadChildren: () =>
+            import('./features/admin/admin-routing-module').then(m => m.ADMIN_ROUTES)
+    },
 ];

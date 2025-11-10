@@ -1,0 +1,34 @@
+.user-layout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px;
+  background: var(--mat-sys-surface);
+  border-radius: 12px;
+}
+
+/* escritorio */
+.desktop .form-section {
+  flex: 1;
+  width: 100%;
+}
+
+.desktop .table-section {
+  flex: 2;
+  width: 100%;
+}
+
+mat-divider[vertical] {
+  align-self: stretch;
+  margin: 0 12px;
+}
+
+/* móvil */
+.mobile {
+  flex-direction: column;
+}
+
+.mobile mat-divider {
+  margin: 16px 0;
+}

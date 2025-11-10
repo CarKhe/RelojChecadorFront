@@ -1,8 +1,12 @@
 <mat-sidenav-container class="layout-container">
   <!-- Sidebar -->
     <mat-sidenav #sidenav [(opened)]="opened" 
-        mode="side" class="layout-sidenav">
-        <app-side-nav/>
+        mode="over" class="layout-sidenav">
+
+        <app-generic-avatar-display
+          name="Carlos Rodriguez"/>
+        <app-side-nav />
+        
     </mat-sidenav>
 
   <!-- Contenido principal -->

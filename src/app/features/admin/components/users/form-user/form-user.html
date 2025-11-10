@@ -1,1 +1,26 @@
-<p>form-user works!</p>
+<form [formGroup]="formulario" (ngSubmit)="guardar()">
+  <app-generic-card
+    title="Registro de Usuario"
+    subtitle="Complete la información requerida"
+    maxWidth="600px">
+        
+        <div card-content>
+            <app-generic-input label="Nombre" placeholder="Nombre Completo" 
+                type="text" controlName="nombre"/>
+
+            <app-generic-input label="Telefono" placeholder="Numero de Telefono" 
+                type="text" controlName="telefono"/>
+            
+            <app-generic-input label="Contraseña" placeholder="Escribe una Contraseña" 
+                type="password" controlName="contraseña"/>
+          
+            <app-generic-select label="Rol" controlName="rol" [options]="roles" 
+                displayField="nombre" valueField="id"/>
+
+        </div>
+        <div card-botones #cardBotones>
+            <app-generic-button label="cancelar" color="secondary" type="fab-extended" icon="cancel" />
+            <app-generic-button label="guardar" color="primary" type="fab-extended" icon="save" />
+        </div>
+  </app-generic-card>
+</form>

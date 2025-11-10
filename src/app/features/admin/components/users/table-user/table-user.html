@@ -1,1 +1,12 @@
-<p>table-user works!</p>
+<app-generic-card title="Tabla Usuarios" maxWidth="100%" >
+    <div card-content>
+        <app-generic-table
+            [data]="usuarios"
+            [columns]="columnas"
+            [paginador]="true"
+            [filtro]="true"
+            [pageSize]="5"
+            (edit)="editar($event)"
+            (delete)="eliminar($event)" />
+    </div>
+</app-generic-card>
