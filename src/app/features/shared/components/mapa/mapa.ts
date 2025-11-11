@@ -13,7 +13,7 @@ export class Mapa implements AfterViewInit {
   private circle!: L.Circle;
   private LATITUD: number = 28.698210;
   private LONGITUD: number = -100.5145414;
-  @Input() RADIO: number =50;
+  @Input() RADIO: number = 50;
   @Output() coordenadasChange = new EventEmitter<{lat: number, lng: number}>();
   ngAfterViewInit(): void {
     this.initMap();

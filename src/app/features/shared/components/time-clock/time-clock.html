@@ -1,0 +1,10 @@
+<button mat-raised-button
+          color="{{ asistiendo ? 'warn' : 'primary' }}"
+          class="boton-redondo"
+          (click)="registrarAsistencia()">
+    {{ asistiendo ? 'ENTRADA' : 'SALIDA' }}
+  </button>
+
+  <p class="estado">
+    Estado actual: <strong>{{ asistiendo ? 'En curso' : 'Inactiva' }}</strong>
+  </p>

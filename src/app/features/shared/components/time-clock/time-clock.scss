@@ -1,0 +1,17 @@
+.boton-redondo {
+  width: 250px;      
+  height: 250px;
+  border-radius: 50%; 
+  border: none;
+  background-color: #1976d2; 
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.estado {
+  margin-top: 20px;
+  font-size: 1.2rem;
+}

@@ -1,0 +1,17 @@
+  <div class="slider-header">
+    <span class="slider-label">{{ label }}:</span>
+    <span class="slider-current">{{ value }} {{ unit }}</span>
+  </div>
+<mat-slider
+  [disabled]="disabled"
+  [max]="max"
+  [min]="min"
+  [step]="step"
+  [discrete]="thumbLabel"
+  [showTickMarks]="showTicks">
+  <input
+    matSliderThumb
+    [ngModel]="value"
+    (ngModelChange)="onValueChange($event)"
+  />
+</mat-slider>

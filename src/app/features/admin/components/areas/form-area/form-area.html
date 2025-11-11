@@ -1,3 +1,26 @@
-<div class="map-container">
-    <app-mapa/>
-</div>
+
+
+<form [formGroup]="formulario" (ngSubmit)="guardar()" class="formulario">
+   <app-generic-card
+        title="Registro del Area"
+        subtitle="Complete la información requerida"
+        maxWidth="600px">
+        <div card-content>
+            
+            <app-mapa [RADIO]="RADIO" (coordenadasChange)="recibirCoordenadas($event)"/>
+            
+            <app-generic-input label="Nombre" placeholder="Nombre Completo" 
+                type="text" controlName="nombre"/>
+            <app-generic-input label="Descripcion" placeholder="Corta Descripcion" 
+                type="text" controlName="descripcion"/>
+
+            <app-generic-slider [min]="10" label="Radio" [(value)]="RADIO" (valueChange)="onSliderChange($event)"/>
+
+        </div>
+        <div card-botones #cardBotones>
+            <app-generic-button label="guardar" color="primary" type="fab-extended" icon="save" />
+        </div>
+    </app-generic-card>
+</form>
+
+
