@@ -1,10 +1,9 @@
-<button mat-raised-button
+
+<button  matButton="filled"
           color="{{ asistiendo ? 'warn' : 'primary' }}"
-          class="boton-redondo"
+          class="boton-redondo primary"
+          [ngClass]="tamano"
           (click)="registrarAsistencia()">
     {{ asistiendo ? 'ENTRADA' : 'SALIDA' }}
   </button>
 
-  <p class="estado">
-    Estado actual: <strong>{{ asistiendo ? 'En curso' : 'Inactiva' }}</strong>
-  </p>

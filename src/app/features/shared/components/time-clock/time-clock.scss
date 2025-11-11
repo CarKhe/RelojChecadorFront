@@ -1,17 +1,42 @@
+@use '@angular/material' as mat;
 .boton-redondo {
-  width: 250px;      
-  height: 250px;
   border-radius: 50%; 
   border: none;
-  background-color: #1976d2; 
-  color: white;
-  font-size: 2rem;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
+  align-items: center;
+}
+
+.chico{
+  width: 250px;      
+  height: 250px;
+  font-size: 2rem;
+}
+
+.mediano{
+  width: 350px;      
+  height: 350px;
+  font-size: 3rem;
+}
+.grande{
+  width: 550px;      
+  height: 550px;
+  font-size: 5rem;
 }
 
 .estado {
   margin-top: 20px;
   font-size: 1.2rem;
+}
+
+.primary{
+  @include mat.button-overrides((
+    text-label-text-color: var(--mat-sys-warning),
+    filled-container-color: var(--mat-sys-warning),
+    outlined-label-text-color : var(--mat-sys-warning),
+    outlined-outline-color: var(--mat-sys-warning), 
+    tonal-label-text-color: var(--mat-sys-warning),
+  ));
+
 }
