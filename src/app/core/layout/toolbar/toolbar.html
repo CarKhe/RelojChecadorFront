@@ -1,7 +1,7 @@
 <mat-toolbar color="primary" class="toolbar">
     <app-generic-button type="icon" icon="menu" (click)="toggleSidenav.emit()" [emmit]="false" />
 
-    <span class="toolbar-title">{{title}}</span>
+    <span class="toolbar-title">{{title | uppercasePipe}}</span>
 
     <span class="spacer"></span>
 

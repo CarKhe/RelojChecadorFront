@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { GenericCard } from "../../../../../shared/components/generic-card/generic-card";
 import { GenericInput } from "../../../../../shared/components/generic-input/generic-input";
 import { GenericSelect } from "../../../../../shared/components/generic-select/generic-select";
 import { GenericButton } from "../../../../../shared/components/generic-button/generic-button";
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { AdminUserService } from '../../../../../core/services/admin/admin-user-service';
+import { RolesDTO } from '../../../../../core/DTOs/admin/roles.dto';
+import { UserFormDTO } from '../../../../../core/DTOs/admin/user-form.dto';
 
 @Component({
   selector: 'app-form-user',
@@ -14,15 +17,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   templateUrl: './form-user.html',
   styleUrl: './form-user.scss',
 })
-export class FormUser {
+export class FormUser implements OnInit {
   formulario: FormGroup;
+  roles: RolesDTO[] = [];
 
-  roles = [
-    { id: 1, nombre: 'Administrador' },
-    { id: 2, nombre: 'Usuario' }
-  ];
 
-  constructor(private fb: FormBuilder) {
+
+  constructor(private fb: FormBuilder,private userService: AdminUserService) {
     this.formulario = this.fb.group({
       nombre: [''],
       telefono: [''],
@@ -30,14 +31,16 @@ export class FormUser {
       rol: ['']
     });
   }
+
+  ngOnInit(): void {
+    this.userService.getRoles().subscribe(data => this.roles = data);
+  }
   guardar() {
-    const resultado = this.formulario.value;
-    console.log('JSON result:', resultado);
-    alert('Datos en JSON:\n' + JSON.stringify(resultado, null, 2));
+    const areaForm: UserFormDTO = this.formulario.value;
+    this.userService.guardarUsuario(areaForm);
   }
 
   cancelar(){
-    console.log('CANCELADOOO');
     this.formulario.reset(); 
   }
 

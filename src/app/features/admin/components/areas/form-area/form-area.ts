@@ -5,6 +5,8 @@ import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { GenericButton } from "../../../../../shared/components/generic-button/generic-button";
 import { GenericCard } from "../../../../../shared/components/generic-card/generic-card";
 import { GenericInput } from "../../../../../shared/components/generic-input/generic-input";
+import { AdminAreaService } from '../../../../../core/services/admin/admin-area-service';
+import { AreaFormDTO } from '../../../../../core/DTOs/admin/area-form.dto';
 
 @Component({
   selector: 'app-form-area',
@@ -18,7 +20,7 @@ export class FormArea {
   RADIO = 10; 
   formulario!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private areaService: AdminAreaService) {}
 
   ngOnInit() {
     this.formulario = this.fb.group({
@@ -43,6 +45,7 @@ export class FormArea {
 
 
   guardar() {
-    console.log('Datos del formulario:', this.formulario.value);
+    const areaForm: AreaFormDTO = this.formulario.value;
+    this.areaService.guardarArea(areaForm);
   }
 }
