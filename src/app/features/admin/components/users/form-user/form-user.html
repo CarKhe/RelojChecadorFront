@@ -1,8 +1,8 @@
-<form [formGroup]="formulario" (ngSubmit)="guardar()">
+<form [formGroup]="formulario">
   <app-generic-card
     title="Registro de Usuario"
     subtitle="Complete la información requerida"
-    maxWidth="600px">
+    maxWidth="100%">
         
         <div card-content>
             <app-generic-input label="Nombre" placeholder="Nombre Completo" 
@@ -19,8 +19,8 @@
 
         </div>
         <div card-botones #cardBotones>
-            <app-generic-button label="cancelar" color="secondary" type="fab-extended" icon="cancel" />
-            <app-generic-button label="guardar" color="primary" type="fab-extended" icon="save" />
+            <app-generic-button label="cancelar" [emmit]="false"  (click)="cancelar()" color="secondary" type="fab-extended" icon="cancel" />
+            <app-generic-button label="guardar" [emmit]="false" (click)="guardar()" color="primary" type="fab-extended" icon="save" />
         </div>
   </app-generic-card>
 </form>

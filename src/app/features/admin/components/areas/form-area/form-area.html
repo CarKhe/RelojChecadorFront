@@ -4,7 +4,7 @@
    <app-generic-card
         title="Registro del Area"
         subtitle="Complete la información requerida"
-        maxWidth="600px">
+        maxWidth="80%">
         <div card-content>
             
             <app-mapa [RADIO]="RADIO" (coordenadasChange)="recibirCoordenadas($event)"/>
@@ -14,7 +14,7 @@
             <app-generic-input label="Descripcion" placeholder="Corta Descripcion" 
                 type="text" controlName="descripcion"/>
 
-            <app-generic-slider [min]="10" label="Radio" [(value)]="RADIO" (valueChange)="onSliderChange($event)"/>
+            <app-generic-slider unit="metros" [min]="10" label="Radio" [(value)]="RADIO" (valueChange)="onSliderChange($event)"/>
 
         </div>
         <div card-botones #cardBotones>

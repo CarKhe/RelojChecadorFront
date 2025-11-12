@@ -2,5 +2,7 @@
     <!-- <div class="current-time">
         {{ currentTime | date: 'HH:mm:ss' }}
     </div> -->
-    <app-time-clock [tamano]="tamanioBoton" (clickBoton)="registrarAsistencia($event)"/>
+    <app-time-clock [tamano]="tamanioBoton" 
+        (clickBoton)="registrarAsistencia($event)" 
+        [deshabilitado]="deshabilitado" [asistenciaStatus]="asistenciaStatus" />
 </div>

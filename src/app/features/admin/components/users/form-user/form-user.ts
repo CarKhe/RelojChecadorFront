@@ -36,4 +36,9 @@ export class FormUser {
     alert('Datos en JSON:\n' + JSON.stringify(resultado, null, 2));
   }
 
+  cancelar(){
+    console.log('CANCELADOOO');
+    this.formulario.reset(); 
+  }
+
 }

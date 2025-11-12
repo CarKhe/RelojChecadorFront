@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GenericCard } from "../../../../../shared/components/generic-card/generic-card";
 import { GenericTable } from "../../../../../shared/components/generic-table/generic-table";
 
@@ -9,6 +9,7 @@ import { GenericTable } from "../../../../../shared/components/generic-table/gen
   styleUrl: './last-registers-table.scss',
 })
 export class LastRegistersTable {
+
   usuarios = [
     { empleado: 'Carlos Rodriguez', area: 'FASCO', hora: '10:00 am'},
     { empleado: 'PEDRO PUENTE', area: 'CR', hora: '09:54 am' },

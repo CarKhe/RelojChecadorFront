@@ -3,7 +3,9 @@ import { TimeClock } from "../../components/time-clock/time-clock";
 import { MatGridListModule } from '@angular/material/grid-list';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Geolocalizacion } from '../../../../core/services/geolocalizacion';
+import { Geolocalizacion } from '../../../../core/services/shared/geolocalizacion';
+import { TimeClockService } from '../../../../core/services/shared/time-clock-service';
+import { RegistroAsistenciaDTO } from '../../../../core/DTOs/shared/registro-asistencia.dto';
 
 @Component({
   selector: 'app-time-clock-module',
@@ -15,9 +17,12 @@ export class TimeClockModule implements OnInit, OnDestroy {
   private timer: any;
   currentTime: Date = new Date();
   tamanioBoton: string = '';
+  deshabilitado: boolean = false;
+  asistenciaStatus: boolean = true;
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private geolocalizacion: Geolocalizacion) {}
+    private geolocalizacion: Geolocalizacion,
+    private timeClockService: TimeClockService) {}
 
   ngOnInit(): void {
       this.timer = setInterval(() => {
@@ -43,6 +48,9 @@ export class TimeClockModule implements OnInit, OnDestroy {
       }
 
     });
+
+    this.asistenciaStatus = this.timeClockService.statusAnterior();
+    this.deshabilitado = this.timeClockService.statusDeshabilitado();
   }
   ngOnDestroy(): void {
     clearInterval(this.timer);
@@ -53,13 +61,13 @@ export class TimeClockModule implements OnInit, OnDestroy {
       const pos = await this.geolocalizacion.obtenerUbicacion();
       const lat = pos.coords.latitude;
       const lon = pos.coords.longitude;
-      const datos = {
+      const datos: RegistroAsistenciaDTO = {
         tipo: tipo ? 'SALIDA' : 'ENTRADA',
         fecha: new Date(),
         latitud: lat,
         longitud: lon
       };
-      console.log('Datos enviados:', datos);
+      this.timeClockService.enviarDatos(datos);
     } catch(error){
        console.error('Error al obtener ubicación:', error);
     }

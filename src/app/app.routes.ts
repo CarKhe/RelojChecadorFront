@@ -12,4 +12,9 @@ export const routes: Routes = [
         loadChildren: () =>
             import('./features/admin/admin-routing-module').then(m => m.ADMIN_ROUTES)
     },
+    {
+        path: 'user',
+        loadChildren: () =>
+            import('./features/user/user-routing-module').then(m => m.USER_ROUTES)
+    },
 ];

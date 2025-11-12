@@ -11,13 +11,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 })
 export class TimeClock {
   @Input() tamano: string = '';
+  @Input()  deshabilitado = false;
+  @Input() asistenciaStatus = true;
   @Output() clickBoton = new EventEmitter<boolean>();
-  asistiendo = true;
-  
 
   registrarAsistencia() {
-    this.asistiendo = !this.asistiendo;
-    this.clickBoton.emit(this.asistiendo);
+    this.asistenciaStatus = !this.asistenciaStatus;
+    this.clickBoton.emit(this.asistenciaStatus);
   }
 
 }

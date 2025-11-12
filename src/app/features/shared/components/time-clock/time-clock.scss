@@ -1,4 +1,5 @@
 @use '@angular/material' as mat;
+
 .boton-redondo {
   border-radius: 50%; 
   border: none;
@@ -30,13 +31,22 @@
   font-size: 1.2rem;
 }
 
-.primary{
+.entrada{
   @include mat.button-overrides((
-    text-label-text-color: var(--mat-sys-warning),
-    filled-container-color: var(--mat-sys-warning),
-    outlined-label-text-color : var(--mat-sys-warning),
-    outlined-outline-color: var(--mat-sys-warning), 
-    tonal-label-text-color: var(--mat-sys-warning),
+    text-label-text-color: var(--mat-sys-success),
+    filled-container-color: var(--mat-sys-success),
+    outlined-label-text-color : var(--mat-sys-success),
+    outlined-outline-color: var(--mat-sys-success), 
+    tonal-label-text-color: var(--mat-sys-success),
   ));
-
 }
+.salida{
+  @include mat.button-overrides((
+    text-label-text-color: var(--mat-sys-error),
+    filled-container-color: var(--mat-sys-error),
+    outlined-label-text-color : var(--mat-sys-error),
+    outlined-outline-color: var(--mat-sys-error), 
+    tonal-label-text-color: var(--mat-sys-error),
+  ));
+}
+

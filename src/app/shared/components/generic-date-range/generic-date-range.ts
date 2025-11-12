@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatLabel, MatFormField, MatFormFieldModule } from "@angular/material/form-field";
 import { MatDateRangeInput, MatDatepickerToggle, MatDatepickerModule } from "@angular/material/datepicker";
-import * as moment from 'moment';
+import moment from 'moment';
 import 'moment/locale/es-mx';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
@@ -48,9 +48,11 @@ export class GenericDateRange {
   form: FormGroup;
 
   constructor(private fb: FormBuilder) {
+    const today = moment();
+    const lastWeek = moment().subtract(7, 'days');
     this.form = this.fb.group({
-      start: [null],
-      end: [null]
+      start: [lastWeek],
+      end: [today]
     });
 
     // Emitir cada vez que cambie el rango

@@ -1,9 +1,11 @@
 
 <button  matButton="filled"
-          color="{{ asistiendo ? 'warn' : 'primary' }}"
-          class="boton-redondo primary"
-          [ngClass]="tamano"
-          (click)="registrarAsistencia()">
-    {{ asistiendo ? 'ENTRADA' : 'SALIDA' }}
-  </button>
+      [disabled]="deshabilitado"
+      class="boton-redondo"
+      [ngClass]="[
+        tamano,
+        asistenciaStatus ? 'entrada' : 'salida']"
+      (click)="registrarAsistencia()">
+    {{ asistenciaStatus ? 'ENTRADA' : 'SALIDA' }}
+</button>
 
