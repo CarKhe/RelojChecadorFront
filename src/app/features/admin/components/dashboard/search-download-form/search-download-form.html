@@ -1,0 +1,11 @@
+<form [formGroup]="form" (ngSubmit)="descargar()">
+    <app-generic-card
+        title="Descargar historial horarios"
+        maxWidth="100%">
+        <div card-content class="card-row">
+            <app-generic-date-range label="Rango de búsqueda" (rangeChange)="onRangeChange($event)"/>
+            <app-generic-button label="Descargar" color="primary" type="fab-extended" icon="download" />
+        </div>
+
+    </app-generic-card>
+</form>

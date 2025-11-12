@@ -13,7 +13,7 @@ import { UppercasePipePipe } from "../../../shared/pipes/uppercase-pipe";
 export class SideNav {
 
   menuItems = [
-    { label: 'asistencias', icon: 'check_box', route: 'buttons' },
+    { label: 'asistencias', icon: 'check_box', route: 'dashboard' },
     { label: 'areas', icon: 'map', route: 'area' },
     { label: 'usuarios', icon: 'assignment_ind', route: 'user' },
     { label: 'reloj', icon: 'check_box', route: 'time' },

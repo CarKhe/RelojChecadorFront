@@ -44,6 +44,7 @@ export class GenericTable<T= any> implements AfterViewInit {
 
   @Input() pageSizeOptions:number[] = [5, 10, 20];
 
+
   /** Eventos de acción */
   @Output() edit = new EventEmitter<T>();
   @Output() delete = new EventEmitter<T>();
