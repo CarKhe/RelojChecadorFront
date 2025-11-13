@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { GenericCard } from "../../../../../shared/components/generic-card/generic-card";
 import { GenericTable } from "../../../../../shared/components/generic-table/generic-table";
 import { AdminUserService } from '../../../../../core/services/admin/admin-user-service';
@@ -14,6 +14,7 @@ import { UserTableDTO } from '../../../../../core/DTOs/admin/user-form.dto';
 export class TableUser implements OnInit {
   columnas:ColumnasDTO[] = [];
   usuarios: UserTableDTO[] = [];
+  @Output() enviarEditar = new EventEmitter<UserTableDTO>();
   constructor(private userService: AdminUserService) {}
 
   ngOnInit(): void {
@@ -22,7 +23,7 @@ export class TableUser implements OnInit {
   }
 
   editar(usuario: UserTableDTO) {
-    console.log('Editar', usuario);
+    this.enviarEditar.emit(usuario);
   }
 
   eliminar(usuario: UserTableDTO) {

@@ -43,4 +43,8 @@ export class AdminUserService {
     console.log(userForm);
   }
 
+  setToModificar(userToMod: UserTableDTO): void{
+    console.log(userToMod);
+  }
+
 }

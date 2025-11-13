@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { GenericCard } from "../../../../../shared/components/generic-card/generic-card";
 import { GenericInput } from "../../../../../shared/components/generic-input/generic-input";
@@ -7,7 +7,7 @@ import { GenericButton } from "../../../../../shared/components/generic-button/g
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AdminUserService } from '../../../../../core/services/admin/admin-user-service';
 import { RolesDTO } from '../../../../../core/DTOs/admin/roles.dto';
-import { UserFormDTO } from '../../../../../core/DTOs/admin/user-form.dto';
+import { UserFormDTO, UserTableDTO } from '../../../../../core/DTOs/admin/user-form.dto';
 
 @Component({
   selector: 'app-form-user',
@@ -17,7 +17,8 @@ import { UserFormDTO } from '../../../../../core/DTOs/admin/user-form.dto';
   templateUrl: './form-user.html',
   styleUrl: './form-user.scss',
 })
-export class FormUser implements OnInit {
+export class FormUser implements OnInit, OnChanges {
+  @Input() usuarioModificar?:UserTableDTO; 
   formulario: FormGroup;
   roles: RolesDTO[] = [];
 
@@ -35,6 +36,13 @@ export class FormUser implements OnInit {
   ngOnInit(): void {
     this.userService.getRoles().subscribe(data => this.roles = data);
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['usuarioModificar'] && this.usuarioModificar){
+      this.userService.setToModificar(this.usuarioModificar);
+    }
+  }
+
   guardar() {
     const areaForm: UserFormDTO = this.formulario.value;
     this.userService.guardarUsuario(areaForm);

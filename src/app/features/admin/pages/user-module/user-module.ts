@@ -4,6 +4,7 @@ import { FormUser } from "../../components/users/form-user/form-user";
 import { TableUser } from "../../components/users/table-user/table-user";
 import { MatDivider } from '@angular/material/divider';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { UserTableDTO } from '../../../../core/DTOs/admin/user-form.dto';
 
 @Component({
   selector: 'app-user-module',
@@ -12,6 +13,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   styleUrl: './user-module.scss',
 })
 export class UserModule implements OnInit {
+  usuarioMod?: UserTableDTO; 
   private breakpointObserver = inject(BreakpointObserver);
   cargando = false;
 
@@ -32,5 +34,9 @@ export class UserModule implements OnInit {
       .subscribe(result => {
         this.isHandset.set(result.matches);
       });
+  }
+
+  ToModificar(usuario: UserTableDTO){
+    this.usuarioMod = usuario;
   }
 }
