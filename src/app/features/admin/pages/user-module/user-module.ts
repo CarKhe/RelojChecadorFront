@@ -1,14 +1,12 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { GenericLoader } from "../../../../shared/components/generic-loader/generic-loader";
 import { FormUser } from "../../components/users/form-user/form-user";
 import { TableUser } from "../../components/users/table-user/table-user";
-import { MatDivider } from '@angular/material/divider';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { UserTableDTO } from '../../../../core/DTOs/admin/user-form.dto';
 
 @Component({
   selector: 'app-user-module',
-  imports: [GenericLoader, FormUser, TableUser,MatDivider],
+  imports: [ FormUser, TableUser],
   templateUrl: './user-module.html',
   styleUrl: './user-module.scss',
 })
