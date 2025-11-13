@@ -1,5 +1,5 @@
-import { Component, Input, input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, EventEmitter, Input, input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { GenericCard } from "../../../../../shared/components/generic-card/generic-card";
 import { GenericInput } from "../../../../../shared/components/generic-input/generic-input";
 import { GenericSelect } from "../../../../../shared/components/generic-select/generic-select";
@@ -9,27 +9,29 @@ import { AdminUserService } from '../../../../../core/services/admin/admin-user-
 import { RolesDTO } from '../../../../../core/DTOs/admin/roles.dto';
 import { UserFormDTO, UserTableDTO } from '../../../../../core/DTOs/admin/user-form.dto';
 
+
 @Component({
   selector: 'app-form-user',
-  imports: [GenericCard, GenericInput, 
+  imports: [GenericCard, GenericInput,
     GenericSelect, GenericButton,
-    MatFormFieldModule,ReactiveFormsModule],
+    MatFormFieldModule, ReactiveFormsModule],
   templateUrl: './form-user.html',
   styleUrl: './form-user.scss',
 })
 export class FormUser implements OnInit, OnChanges {
   @Input() usuarioModificar?:UserTableDTO; 
+
   formulario: FormGroup;
   roles: RolesDTO[] = [];
-
-
+  crearUsuario: boolean = true;
 
   constructor(private fb: FormBuilder,private userService: AdminUserService) {
     this.formulario = this.fb.group({
-      nombre: [''],
-      telefono: [''],
-      contraseña: [''],
-      rol: ['']
+      id: [''],
+      nombre: ['', Validators.required],
+      telefono: ['', Validators.required],
+      contraseña: ['', Validators.required],
+      rol: ['', Validators.required]
     });
   }
 
@@ -39,17 +41,39 @@ export class FormUser implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['usuarioModificar'] && this.usuarioModificar){
-      this.userService.setToModificar(this.usuarioModificar);
+      this.setModificar(this.usuarioModificar);
     }
   }
 
   guardar() {
     const areaForm: UserFormDTO = this.formulario.value;
     this.userService.guardarUsuario(areaForm);
+    
+  }
+
+  setModificar(usuario: UserTableDTO){
+    const userFormMod: UserFormDTO = this.userService.setToModificar(usuario);
+    this.formulario.patchValue({
+      id: userFormMod.id,
+      nombre: userFormMod.nombre,
+      telefono: userFormMod.telefono,
+      contraseña: userFormMod.contraseña,
+      rol: userFormMod.rol
+    });
+    this.formulario.markAsPristine();
+    this.crearUsuario = false;
+  }
+
+  modificar(){
+    if(this.formulario.value.id){
+      console.log(this.formulario.value);
+    }
+    this.formulario.reset(); 
   }
 
   cancelar(){
     this.formulario.reset(); 
+    this.crearUsuario = true;
   }
 
 }

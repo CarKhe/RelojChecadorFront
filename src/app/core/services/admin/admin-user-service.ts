@@ -43,8 +43,20 @@ export class AdminUserService {
     console.log(userForm);
   }
 
-  setToModificar(userToMod: UserTableDTO): void{
+  setToModificar(userToMod: UserTableDTO): UserFormDTO{
+    //Consulta en la base de datos
     console.log(userToMod);
+
+    //Retorno del cliente con los campos que puede cambiar
+    const userFormMod: UserFormDTO = {
+      id: userToMod.id, 
+      nombre: userToMod.nombre,
+      telefono: userToMod.telefono,
+      contraseña: "123contra",
+      rol: 1
+    }
+    
+    return userFormMod;
   }
 
 }

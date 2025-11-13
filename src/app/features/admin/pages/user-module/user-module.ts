@@ -35,6 +35,7 @@ export class UserModule implements OnInit {
   }
 
   ToModificar(usuario: UserTableDTO){
-    this.usuarioMod = usuario;
+    this.usuarioMod = { ...usuario };
   }
+
 }

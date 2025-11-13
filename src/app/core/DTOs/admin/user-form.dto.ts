@@ -1,4 +1,5 @@
 export interface UserFormDTO {
+    id: number | null, 
     nombre: string;
     telefono: string;
     contraseña: string;

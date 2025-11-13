@@ -20,7 +20,15 @@
         </div>
         <div card-botones #cardBotones>
             <app-generic-button label="cancelar" [emmit]="false"  (click)="cancelar()" color="secondary" type="fab-extended" icon="cancel" />
-            <app-generic-button label="guardar" [emmit]="false" (click)="guardar()" color="primary" type="fab-extended" icon="save" />
+            @if(crearUsuario){
+                <app-generic-button label="guardar" [emmit]="false" 
+                (click)="guardar()" color="primary" [disabled]="formulario.invalid"
+                type="fab-extended" icon="save" />
+            } @else{
+                <app-generic-button label="modificar" [emmit]="false" 
+                (click)="modificar()"  [disabled]=" formulario.invalid"
+                color="tertiary" type="fab-extended" icon="update" />
+            }
         </div>
   </app-generic-card>
 </form>
