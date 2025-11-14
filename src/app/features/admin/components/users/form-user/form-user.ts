@@ -48,6 +48,7 @@ export class FormUser implements OnInit, OnChanges {
   guardar() {
     const areaForm: UserFormDTO = this.formulario.value;
     this.userService.guardarUsuario(areaForm);
+    this.formulario.reset(); 
     
   }
 
@@ -73,6 +74,7 @@ export class FormUser implements OnInit, OnChanges {
 
   cancelar(){
     this.formulario.reset(); 
+    this.formulario.markAsPristine();
     this.crearUsuario = true;
   }
 

@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { Router, RouterModule } from '@angular/router';
 import { UppercasePipePipe } from "../../../shared/pipes/uppercase-pipe";
+import { AuthService } from '../../services/auth/auth-service';
+import { MenuNavbarDTO } from '../../DTOs/layout/menu-navbar.dto';
+import { LayoutService } from '../../services/layout/layout-service';
 
 @Component({
   selector: 'app-side-nav',
@@ -10,12 +13,22 @@ import { UppercasePipePipe } from "../../../shared/pipes/uppercase-pipe";
   templateUrl: './side-nav.html',
   styleUrl: './side-nav.scss',
 })
-export class SideNav {
+export class SideNav implements OnInit {
+  
+  rol: string = '';
+  menuItems: MenuNavbarDTO[]= [];
+  constructor(private authService: AuthService, private layoutService: LayoutService) {}
 
-  menuItems = [
-    { label: 'asistencias', icon: 'check_box', route: 'dashboard' },
-    { label: 'areas', icon: 'map', route: 'area' },
-    { label: 'usuarios', icon: 'assignment_ind', route: 'user' },
-    { label: 'reloj', icon: 'check_box', route: 'time' },
-  ];
+  ngOnInit(): void {
+    const rol = this.authService.getRole();
+    this.menuItems = this.getMenuNavBar(rol);
+  }
+
+  getMenuNavBar(rol: string | null):MenuNavbarDTO[]{
+    if(rol){
+      return this.layoutService.getMenuItems(rol);
+    }
+    return [];
+  }
+
 }

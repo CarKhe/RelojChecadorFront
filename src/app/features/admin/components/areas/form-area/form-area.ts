@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Mapa } from '../../../../shared/components/mapa/mapa';
 import { GenericSlider } from "../../../../../shared/components/generic-slider/generic-slider";
-import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { GenericButton } from "../../../../../shared/components/generic-button/generic-button";
 import { GenericCard } from "../../../../../shared/components/generic-card/generic-card";
 import { GenericInput } from "../../../../../shared/components/generic-input/generic-input";
@@ -24,8 +24,8 @@ export class FormArea {
 
   ngOnInit() {
     this.formulario = this.fb.group({
-      nombre: [''],
-      descripcion: [''],
+      nombre: ['', Validators.required],
+      descripcion: ['', Validators.required],
       latitud: [this.LATITUD],
       longitud: [this.LONGITUD],
       radio: [this.RADIO]

@@ -6,6 +6,9 @@ import { environment } from '../../../../../environments/environment.development
 import { CommonModule } from '@angular/common';
 import { GenericInput } from "../../../../shared/components/generic-input/generic-input";
 import { GenericButton } from '../../../../shared/components/generic-button/generic-button';
+import { AuthService } from '../../../../core/services/auth/auth-service';
+import { LoginFormDTO } from '../../../../core/DTOs/auth/login-form.dto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +21,9 @@ import { GenericButton } from '../../../../shared/components/generic-button/gene
 export class Login {
   titulo: string = environment.appTitle + " login";
   formulario: FormGroup;
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, 
+              private authService: AuthService,
+              private router: Router) {
     this.formulario = this.fb.group({
       user: ['',[Validators.required]],
       pass: ['',[Validators.required]]
@@ -26,6 +31,20 @@ export class Login {
   }
 
   login(){
-     console.log('Datos del login:',this.formulario.value);
+    const dto: LoginFormDTO = {
+      username: this.formulario.value.user,
+      password: this.formulario.value.pass
+    };
+      const ok = this.authService.login(dto);
+
+    if (!ok) {
+      // Mostrar error
+      console.log("Credenciales incorrectas");
+      return;
+    }
+
+    // Redirigir según el rol
+    const role = this.authService.getRole();
+    this.router.navigate([`/${role}`]);
   }
 }

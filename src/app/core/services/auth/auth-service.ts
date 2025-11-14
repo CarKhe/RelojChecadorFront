@@ -1,39 +1,50 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginFormDTO } from '../../DTOs/auth/login-form.dto';
 
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly TOKEN_KEY = 'app_token';
-  private readonly ROLE_KEY = 'app_token_role';
+  
+  private currentUser: { userName: string, role:string} | null = null;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router){}
 
-  // login(username: string, password:string):LoginResult{
-  //   if (username === 'admin' && password === '1234') {
-  //     localStorage.setItem(this.TOKEN_KEY,'fake-jwt-token');
-  //     localStorage.setItem(this.ROLE_KEY, 'admin');
-  //     return { success: true, role: 'admin' };
-  //   }
-  //   if (username === 'user' && password === '5678') {
-  //     localStorage.setItem(this.TOKEN_KEY,'fake-jwt-token');
-  //     localStorage.setItem(this.ROLE_KEY, 'user');
-  //     return { success: true, role: 'user' };
-  //   }
-  //   return { success: false, role: '' };
-  // }
+  login(dto: LoginFormDTO): boolean {
+    const { username, password } = dto;
 
-  logout(): void {
-    localStorage.removeItem(this.TOKEN_KEY);
-    localStorage.removeItem(this.ROLE_KEY);
+    if (username === 'admin' && password === '1234') {
+      this.currentUser = { userName: username, role: 'admin' };
+    } else if (username === 'user' && password === '1234') {
+      this.currentUser = { userName: username, role: 'user' };
+    } else {
+      return false;
+    }
+
+    localStorage.setItem('user', JSON.stringify(this.currentUser));
+    return true;
+  }
+
+  logout() {
+    this.currentUser = null;
+    localStorage.removeItem('user');
     this.router.navigate(['/auth']);
   }
 
-  isAuthenticated(): boolean {
-    return !!localStorage.getItem(this.TOKEN_KEY) && !!localStorage.getItem(this.ROLE_KEY);
+  getUser() {
+    if (!this.currentUser) {
+      const stored = localStorage.getItem('user');
+      if (stored) this.currentUser = JSON.parse(stored);
+    }
+    return this.currentUser;
   }
 
-  getUserRole(): string | null {
-    return localStorage.getItem(this.ROLE_KEY);
+  getRole(): string | null {
+    return this.getUser()?.role ?? null;
   }
+
+  isAuthenticated(): boolean {
+    return !!this.getUser();
+  }
+
 }

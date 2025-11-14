@@ -22,11 +22,11 @@
             <app-generic-button label="cancelar" [emmit]="false"  (click)="cancelar()" color="secondary" type="fab-extended" icon="cancel" />
             @if(crearUsuario){
                 <app-generic-button label="guardar" [emmit]="false" 
-                (click)="guardar()" color="primary" [disabled]="formulario.invalid"
+                (click)="guardar()" color="primary" [disabled]="formulario.pristine  || formulario.invalid"
                 type="fab-extended" icon="save" />
             } @else{
                 <app-generic-button label="modificar" [emmit]="false" 
-                (click)="modificar()"  [disabled]=" formulario.invalid"
+                (click)="modificar()"  [disabled]="formulario.pristine || formulario.invalid"
                 color="tertiary" type="fab-extended" icon="update" />
             }
         </div>

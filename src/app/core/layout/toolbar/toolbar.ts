@@ -4,6 +4,7 @@ import { GenericButton } from '../../../shared/components/generic-button/generic
 import { Router } from '@angular/router';
 import { UppercasePipePipe } from "../../../shared/pipes/uppercase-pipe";
 import { environment } from '../../../../environments/environment.development';
+import { AuthService } from '../../services/auth/auth-service';
 
 @Component({
   selector: 'app-toolbar',
@@ -12,13 +13,13 @@ import { environment } from '../../../../environments/environment.development';
   styleUrl: './toolbar.scss',
 })
 export class Toolbar {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   @Output() toggleSidenav = new EventEmitter<void>();
   
   title: string =  environment.appTitle;
 
   logout(){
-     this.router.navigate(['/auth']);
+    this.authService.logout();
   }
 }

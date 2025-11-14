@@ -18,7 +18,9 @@
 
         </div>
         <div card-botones #cardBotones>
-            <app-generic-button label="guardar" color="primary" type="fab-extended" icon="save" />
+            <app-generic-button label="guardar"
+             color="primary"   [disabled]="formulario.pristine  || formulario.invalid"
+             type="fab-extended" icon="save" />
         </div>
     </app-generic-card>
 </form>
