@@ -31,19 +31,17 @@ export class Login {
   }
 
   login(){
+    if (this.formulario.invalid) return;
     const dto: LoginFormDTO = {
       username: this.formulario.value.user,
       password: this.formulario.value.pass
     };
-      const ok = this.authService.login(dto);
+    const ok = this.authService.login(dto);
 
     if (!ok) {
-      // Mostrar error
       console.log("Credenciales incorrectas");
       return;
     }
-
-    // Redirigir según el rol
     const role = this.authService.getRole();
     this.router.navigate([`/${role}`]);
   }

@@ -12,8 +12,8 @@ export const roleGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
     return router.parseUrl('/auth');
   }
   
-  if (userRole !== expectedRole) {
-    return router.parseUrl('/' + userRole);
+  if (expectedRole && userRole !== expectedRole) {
+    return router.parseUrl('/' + (userRole ?? 'auth'));
   }
   
   return true;
