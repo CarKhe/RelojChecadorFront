@@ -3,11 +3,21 @@ import { RolesDTO } from '../../DTOs/admin/roles.dto';
 import { Observable, of } from 'rxjs';
 import { UserFormDTO, UserTableDTO } from '../../DTOs/admin/user-form.dto';
 import { ColumnasDTO } from '../../DTOs/shared/columnas.dto';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminUserService {
+
+  constructor(private http: HttpClient) {}
+  private apiRoute = environment.API_ROUTE + "Usuarios";
+
+  getUsers(): Observable<UserTableDTO[]> {
+    return this.http.get<UserTableDTO[]>(`${this.apiRoute}`);
+  }
+
   private roles: RolesDTO[] = [
     { id: 1, nombre: 'Administrador' },
     { id: 2, nombre: 'Usuario' }
@@ -20,12 +30,6 @@ export class AdminUserService {
     { field: 'rol', label: 'Rol' },
   ];
 
-  private usuarios: UserTableDTO[] = [
-    { id: 1, nombre: 'Carlos', telefono: '585@mail.com', rol: 'Admin' },
-    { id: 2, nombre: 'Ana', telefono: 'ana@mail.com', rol: 'Usuario' },
-    { id: 3, nombre: 'Julian', telefono: 'julian@mail.com', rol: 'Usuario' },
-    { id: 4, nombre: 'Tulio', telefono: 'tulio@mail.com', rol: 'Usuario' },
-  ];
 
   getRoles(): Observable<RolesDTO[]>{
     return of(this.roles);
@@ -35,9 +39,6 @@ export class AdminUserService {
     return of(this.columnas);
   }
 
-  getUsers(): Observable<UserTableDTO[]>{
-    return of(this.usuarios);
-  }
 
   guardarUsuario(userForm: UserFormDTO){
     console.log(userForm);

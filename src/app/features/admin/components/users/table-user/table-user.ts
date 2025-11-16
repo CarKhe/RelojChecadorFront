@@ -19,7 +19,18 @@ export class TableUser implements OnInit {
 
   ngOnInit(): void {
     this.userService.getColumns().subscribe(data => this.columnas = data);
-    this.userService.getUsers().subscribe(data => this.usuarios = data);
+    this.cargarUsuarioAPI();
+  }
+
+  cargarUsuarioAPI(){
+    this.userService.getUsers().subscribe({
+      next: (data) => {
+        this.usuarios = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar usuarios', err);
+      }
+    });
   }
 
   editar(usuario: UserTableDTO) {
