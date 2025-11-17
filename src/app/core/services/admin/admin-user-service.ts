@@ -18,10 +18,9 @@ export class AdminUserService {
     return this.http.get<UserTableDTO[]>(`${this.apiRoute}`);
   }
 
-  private roles: RolesDTO[] = [
-    { id: 1, nombre: 'Administrador' },
-    { id: 2, nombre: 'Usuario' }
-  ];
+
+
+ 
 
   private columnas: ColumnasDTO[] = [
     { field: 'id', label: 'ID' },
@@ -30,10 +29,6 @@ export class AdminUserService {
     { field: 'rol', label: 'Rol' },
   ];
 
-
-  getRoles(): Observable<RolesDTO[]>{
-    return of(this.roles);
-  }
 
   getColumns(): Observable<ColumnasDTO[]>{
     return of(this.columnas);

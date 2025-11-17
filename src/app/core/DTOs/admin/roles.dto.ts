@@ -1,4 +1,4 @@
 export interface RolesDTO {
-    id: number,
-    nombre:string
+    idRol: number,
+    rol: string
 }

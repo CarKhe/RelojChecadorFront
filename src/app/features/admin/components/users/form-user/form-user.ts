@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AdminUserService } from '../../../../../core/services/admin/admin-user-service';
 import { RolesDTO } from '../../../../../core/DTOs/admin/roles.dto';
 import { UserFormDTO, UserTableDTO } from '../../../../../core/DTOs/admin/user-form.dto';
+import { AdminRolesService } from '../../../../../core/services/admin/admin-roles-service';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class FormUser implements OnInit, OnChanges {
   roles: RolesDTO[] = [];
   crearUsuario: boolean = true;
 
-  constructor(private fb: FormBuilder,private userService: AdminUserService) {
+  constructor(private fb: FormBuilder, private userService: AdminUserService,
+              private rolService: AdminRolesService) {
     this.formulario = this.fb.group({
       id: [''],
       nombre: ['', Validators.required],
@@ -36,7 +38,14 @@ export class FormUser implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.userService.getRoles().subscribe(data => this.roles = data);
+    this.rolService.getRoles().subscribe({
+      next: (data) => {
+        this.roles = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar usuarios', err);
+      }
+    });;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
