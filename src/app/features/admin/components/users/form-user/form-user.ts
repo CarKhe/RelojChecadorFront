@@ -32,8 +32,8 @@ export class FormUser implements OnInit, OnChanges {
       id: [''],
       nombre: ['', Validators.required],
       telefono: ['', Validators.required],
-      contraseña: ['', Validators.required],
-      rol: ['', Validators.required]
+      passwordHash: ['', Validators.required],
+      idRol: ['', Validators.required]
     });
   }
 
@@ -56,7 +56,15 @@ export class FormUser implements OnInit, OnChanges {
 
   guardar() {
     const areaForm: UserFormDTO = this.formulario.value;
-    this.userService.guardarUsuario(areaForm);
+    console.log(areaForm);
+    this.userService.postUsuario(areaForm).subscribe({
+      next: (resp) =>{
+        console.log('Usuario creado:', resp);
+      },
+      error: (err) => {
+        console.error('Error al crear usuario', err);
+      }
+    });
     this.formulario.reset(); 
     
   }
@@ -67,8 +75,8 @@ export class FormUser implements OnInit, OnChanges {
       id: userFormMod.id,
       nombre: userFormMod.nombre,
       telefono: userFormMod.telefono,
-      contraseña: userFormMod.contraseña,
-      rol: userFormMod.rol
+      contraseña: userFormMod.passwordHash,
+      rol: userFormMod.idrol
     });
     this.formulario.markAsPristine();
     this.crearUsuario = false;

@@ -11,17 +11,6 @@ import { environment } from '../../../../environments/environment.development';
 })
 export class AdminUserService {
 
-  constructor(private http: HttpClient) {}
-  private apiRoute = environment.API_ROUTE + "Usuarios";
-
-  getUsers(): Observable<UserTableDTO[]> {
-    return this.http.get<UserTableDTO[]>(`${this.apiRoute}`);
-  }
-
-
-
- 
-
   private columnas: ColumnasDTO[] = [
     { field: 'id', label: 'ID' },
     { field: 'nombre', label: 'Nombre' },
@@ -29,14 +18,20 @@ export class AdminUserService {
     { field: 'rol', label: 'Rol' },
   ];
 
+  constructor(private http: HttpClient) {}
+  private apiRoute = environment.API_ROUTE + "Usuarios";
+
+  getUsers(): Observable<UserTableDTO[]> {
+    return this.http.get<UserTableDTO[]>(this.apiRoute);
+  }
 
   getColumns(): Observable<ColumnasDTO[]>{
     return of(this.columnas);
   }
 
 
-  guardarUsuario(userForm: UserFormDTO){
-    console.log(userForm);
+  postUsuario(userForm: UserFormDTO):Observable<any>{
+    return this.http.post<UserFormDTO>(this.apiRoute,userForm);
   }
 
   setToModificar(userToMod: UserTableDTO): UserFormDTO{
@@ -48,8 +43,8 @@ export class AdminUserService {
       id: userToMod.id, 
       nombre: userToMod.nombre,
       telefono: userToMod.telefono,
-      contraseña: "123contra",
-      rol: 1
+      passwordHash: "123contra",
+      idrol: 1
     }
     
     return userFormMod;

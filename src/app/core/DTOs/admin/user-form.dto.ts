@@ -2,8 +2,8 @@ export interface UserFormDTO {
     id: number | null, 
     nombre: string;
     telefono: string;
-    contraseña: string;
-    rol: number; 
+    passwordHash: string;
+    idrol: number; 
 }
 
 export interface UserTableDTO {

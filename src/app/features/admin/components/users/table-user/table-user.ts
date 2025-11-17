@@ -19,10 +19,10 @@ export class TableUser implements OnInit {
 
   ngOnInit(): void {
     this.userService.getColumns().subscribe(data => this.columnas = data);
-    this.cargarUsuarioAPI();
+    this.cargarUsuarios();
   }
 
-  cargarUsuarioAPI(){
+  cargarUsuarios(){
     this.userService.getUsers().subscribe({
       next: (data) => {
         this.usuarios = data;
