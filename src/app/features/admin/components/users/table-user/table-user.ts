@@ -25,6 +25,7 @@ export class TableUser implements OnInit {
   cargarUsuarios(){
     this.userService.getUsers().subscribe({
       next: (data) => {
+        console.log(data);
         this.usuarios = data;
       },
       error: (err) => {
@@ -38,6 +39,13 @@ export class TableUser implements OnInit {
   }
 
   eliminar(usuario: UserTableDTO) {
-    console.log('Eliminar', usuario);
+    this.userService.softDeleteUser(usuario.id).subscribe({
+      next: (data) => {
+        console.log("Deshabilitado:" + data);
+      },
+      error: (err) => {
+        console.error('Error al Deshabilitar', err);
+      }
+    });
   }
 }

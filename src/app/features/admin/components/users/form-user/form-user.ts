@@ -70,16 +70,24 @@ export class FormUser implements OnInit, OnChanges {
   }
 
   setModificar(usuario: UserTableDTO){
-    const userFormMod: UserFormDTO = this.userService.setToModificar(usuario);
-    this.formulario.patchValue({
-      id: userFormMod.id,
-      nombre: userFormMod.nombre,
-      telefono: userFormMod.telefono,
-      contraseña: userFormMod.passwordHash,
-      rol: userFormMod.idrol
+    this.userService.setToModificar(usuario.id).subscribe({
+      next: (data) => {
+        const idRol = Number(data.idrol);
+        this.formulario.patchValue({
+          id: data.id,
+          nombre: data.nombre,
+          telefono: data.telefono,
+          passwordHash: data.passwordHash,
+          idRol: 2
+        });
+        this.formulario.markAsPristine();
+        this.crearUsuario = false;
+      },
+      error: (err) => {
+        console.error('Error al cargar usuarios', err);
+      }
     });
-    this.formulario.markAsPristine();
-    this.crearUsuario = false;
+
   }
 
   modificar(){

@@ -34,20 +34,13 @@ export class AdminUserService {
     return this.http.post<UserFormDTO>(this.apiRoute,userForm);
   }
 
-  setToModificar(userToMod: UserTableDTO): UserFormDTO{
+  setToModificar(id: number):Observable<UserFormDTO>{
     //Consulta en la base de datos
-    console.log(userToMod);
+    return this.http.get<UserFormDTO>(`${this.apiRoute}/${id}`);
+  }
 
-    //Retorno del cliente con los campos que puede cambiar
-    const userFormMod: UserFormDTO = {
-      id: userToMod.id, 
-      nombre: userToMod.nombre,
-      telefono: userToMod.telefono,
-      passwordHash: "123contra",
-      idrol: 1
-    }
-    
-    return userFormMod;
+  softDeleteUser(id: number):Observable<any>{
+    return this.http.delete(`${this.apiRoute}/${id}`);
   }
 
 }
