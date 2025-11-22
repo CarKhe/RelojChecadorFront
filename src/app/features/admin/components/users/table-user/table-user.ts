@@ -25,7 +25,7 @@ export class TableUser implements OnInit {
   cargarUsuarios(){
     this.userService.getUsers().subscribe({
       next: (data) => {
-        console.log(data);
+        this.usuarios = [];
         this.usuarios = data;
       },
       error: (err) => {

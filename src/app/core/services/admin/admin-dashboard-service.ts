@@ -3,30 +3,31 @@ import { RangoFechasDescargaDTO } from '../../DTOs/admin/rango-fechas-descarga.d
 import { Observable, of } from 'rxjs';
 import { UsuariosUltimosRegistrosDTO } from '../../DTOs/admin/usuarios-ultimos-registros.dto';
 import { ColumnasDTO } from '../../DTOs/shared/columnas.dto';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminDashboardService {
-  private usuarios: UsuariosUltimosRegistrosDTO[] = [
-    { empleado: 'Carlos Rodriguez', area: 'FASCO', hora: '10:00 am' },
-    { empleado: 'PEDRO PUENTE', area: 'CR', hora: '09:54 am' },
-    { empleado: 'ALFREDO SOLIS', area: 'JACKEL', hora: '09:50 am' },
-    { empleado: 'MARIO TREJO', area: 'FASCO', hora: '09:44 am' },
-  ];
 
   private columnas: ColumnasDTO[] = [
-    { field: 'empleado', label: 'EMPLEADO' },
+    { field: 'usuario', label: 'EMPLEADO' },
     { field: 'area', label: 'AREA' },
-    { field: 'hora', label: 'HORA' },
+    { field: 'movimiento', label: 'Movimiento' },
+    { field: 'dentroZona', label: 'Zona' },
+    { field: 'fechaHora', label: 'Hora' },
   ];
+
+  constructor(private http: HttpClient) {}
+  private apiRoute = environment.API_ROUTE + "Asistencia";
   
   descargar(rangoFechas: RangoFechasDescargaDTO){
     console.log(rangoFechas);
   }
     
-  getUsuarios(): Observable<UsuariosUltimosRegistrosDTO[]> {
-    return of(this.usuarios);
+  GetLastAsistencia(cant: number): Observable<UsuariosUltimosRegistrosDTO[]> {
+    return this.http.get<UsuariosUltimosRegistrosDTO[]>(`${this.apiRoute}/last/${cant}`);
   }
 
   

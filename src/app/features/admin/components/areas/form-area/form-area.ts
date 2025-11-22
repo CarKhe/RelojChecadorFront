@@ -26,8 +26,8 @@ export class FormArea {
     this.formulario = this.fb.group({
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
-      latitud: [this.LATITUD],
-      longitud: [this.LONGITUD],
+      centroLat: [this.LATITUD],
+      centroLon: [this.LONGITUD],
       radio: [this.RADIO]
     });
   }
@@ -35,7 +35,7 @@ export class FormArea {
    recibirCoordenadas(coords: { lat: number; lng: number }) {
     this.LATITUD = coords.lat;
     this.LONGITUD = coords.lng;
-    this.formulario.patchValue({ latitud: coords.lat, longitud: coords.lng });
+    this.formulario.patchValue({ centroLat: coords.lat, centroLon: coords.lng });
   }
 
   onSliderChange(value: number) {
@@ -46,6 +46,14 @@ export class FormArea {
 
   guardar() {
     const areaForm: AreaFormDTO = this.formulario.value;
-    this.areaService.guardarArea(areaForm);
+    this.areaService.postArea(areaForm).subscribe({
+      next: (resp) =>{
+        console.log('Area creado:', resp);
+        this.formulario.reset(); 
+      },
+      error: (err) => {
+        console.error('Error al crear Area', err);
+      }
+    });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { GenericCard } from "../../../../../shared/components/generic-card/generic-card";
 import { GenericTable } from "../../../../../shared/components/generic-table/generic-table";
 import { AdminDashboardService } from '../../../../../core/services/admin/admin-dashboard-service';
@@ -15,22 +15,35 @@ import { interval, Subscription, switchMap } from 'rxjs';
 export class LastRegistersTable implements OnInit, OnDestroy {
   usuarios:UsuariosUltimosRegistrosDTO[] = [];
   columnas:ColumnasDTO[] = [];
+  @Input() lasAsistenciaCant = 2;
   private subscription!: Subscription;
 
   constructor( private  serviceDashboard: AdminDashboardService) {}
 
   ngOnInit(): void {
-    this.serviceDashboard.getUsuarios().subscribe(data => this.usuarios = data);
+    this.getLastAsistencias(this.lasAsistenciaCant);
     this.serviceDashboard.getColumnas().subscribe(data => this.columnas = data);
 
     // Actualizar cada 10 segundos la tabla si existe cambio en la grafica
     this.subscription = interval(10000)
-      .pipe(switchMap(() => this.serviceDashboard.getUsuarios()))
+      .pipe(switchMap(() => this.serviceDashboard.GetLastAsistencia(this.lasAsistenciaCant)))
       .subscribe({
         next: (nuevosUsuarios) => this.detectarCambios(nuevosUsuarios),
         error: (err) => console.error('Error en actualización:', err)
       });
 
+  }
+
+  getLastAsistencias(cant: number){
+      this.serviceDashboard.GetLastAsistencia(cant).subscribe({
+        next: (data) =>{
+          this.usuarios = [];
+          this.usuarios = data
+        },
+        error: (err) =>{
+          console.error("Error: "+err);
+        }
+    });
   }
 
   ngOnDestroy(): void {

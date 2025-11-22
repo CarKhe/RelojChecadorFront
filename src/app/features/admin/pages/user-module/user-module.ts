@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { FormUser } from "../../components/users/form-user/form-user";
 import { TableUser } from "../../components/users/table-user/table-user";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -14,6 +14,8 @@ export class UserModule implements OnInit {
   usuarioMod?: UserTableDTO; 
   private breakpointObserver = inject(BreakpointObserver);
   cargando = false;
+
+  @ViewChild('tabla') tabla!: TableUser;
 
   // señal reactiva para el modo móvil
   isHandset = signal(false);
@@ -37,5 +39,11 @@ export class UserModule implements OnInit {
   ToModificar(usuario: UserTableDTO){
     this.usuarioMod = { ...usuario };
   }
+
+  recargarTablaForm(){
+    this.tabla.cargarUsuarios();
+  }
+
+
 
 }

@@ -3,7 +3,7 @@ export interface UserFormDTO {
     nombre: string;
     telefono: string;
     passwordHash: string;
-    idrol: number; 
+    idRol: number; 
 }
 
 export interface UserTableDTO {
@@ -12,3 +12,4 @@ export interface UserTableDTO {
     telefono: string;
     rol: string; 
 }
+

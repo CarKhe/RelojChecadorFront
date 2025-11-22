@@ -21,6 +21,7 @@ import { AdminRolesService } from '../../../../../core/services/admin/admin-role
 })
 export class FormUser implements OnInit, OnChanges {
   @Input() usuarioModificar?:UserTableDTO; 
+  @Output() recargarTabla = new EventEmitter<void>();
 
   formulario: FormGroup;
   roles: RolesDTO[] = [];
@@ -29,11 +30,11 @@ export class FormUser implements OnInit, OnChanges {
   constructor(private fb: FormBuilder, private userService: AdminUserService,
               private rolService: AdminRolesService) {
     this.formulario = this.fb.group({
-      id: [''],
+      id: [ 0 ],
       nombre: ['', Validators.required],
       telefono: ['', Validators.required],
       passwordHash: ['', Validators.required],
-      idRol: ['', Validators.required]
+      idRol: [ 0 ]
     });
   }
 
@@ -45,7 +46,7 @@ export class FormUser implements OnInit, OnChanges {
       error: (err) => {
         console.error('Error al cargar usuarios', err);
       }
-    });;
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -56,29 +57,44 @@ export class FormUser implements OnInit, OnChanges {
 
   guardar() {
     const areaForm: UserFormDTO = this.formulario.value;
-    console.log(areaForm);
     this.userService.postUsuario(areaForm).subscribe({
       next: (resp) =>{
         console.log('Usuario creado:', resp);
+        this.formulario.reset(); 
+        this.recargarTabla.emit();
       },
       error: (err) => {
         console.error('Error al crear usuario', err);
       }
     });
+  }
+
+  modificar(){
+    if(this.formulario.value.id){
+      const areaForm: UserFormDTO = this.formulario.value;
+      this.userService.putUsuario(areaForm).subscribe({
+        next: (resp) => {
+          console.log('Usuario Modificado', resp);
+          this.formulario.reset(); 
+          this.recargarTabla.emit();
+        },
+        error: (err) => {
+          console.error('Error al Modificar usuario', err);
+        }
+      });
+    }
     this.formulario.reset(); 
-    
   }
 
   setModificar(usuario: UserTableDTO){
     this.userService.setToModificar(usuario.id).subscribe({
       next: (data) => {
-        const idRol = Number(data.idrol);
         this.formulario.patchValue({
           id: data.id,
           nombre: data.nombre,
           telefono: data.telefono,
           passwordHash: data.passwordHash,
-          idRol: 2
+          idRol: data.idRol
         });
         this.formulario.markAsPristine();
         this.crearUsuario = false;
@@ -88,13 +104,6 @@ export class FormUser implements OnInit, OnChanges {
       }
     });
 
-  }
-
-  modificar(){
-    if(this.formulario.value.id){
-      console.log(this.formulario.value);
-    }
-    this.formulario.reset(); 
   }
 
   cancelar(){

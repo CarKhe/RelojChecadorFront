@@ -1,0 +1,13 @@
+<app-generic-card
+    title="Tabla de Las Areas"
+    maxWidth="80%">
+    <div card-content>
+        <app-generic-table
+            [data]="areas"
+            [columns]="columnas"
+            [paginador]="true"
+            [filtro]="true"
+            [showActions]="false"
+            [pageSize]="10"/>
+    </div>
+</app-generic-card>    

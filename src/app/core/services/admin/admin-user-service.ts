@@ -34,6 +34,10 @@ export class AdminUserService {
     return this.http.post<UserFormDTO>(this.apiRoute,userForm);
   }
 
+  putUsuario(userForm:UserFormDTO):Observable<any>{
+    return this.http.put<UserFormDTO>(`${this.apiRoute}/${userForm.id}`, userForm)
+  }
+
   setToModificar(id: number):Observable<UserFormDTO>{
     //Consulta en la base de datos
     return this.http.get<UserFormDTO>(`${this.apiRoute}/${id}`);
