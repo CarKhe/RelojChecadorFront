@@ -1,13 +1,13 @@
 <app-generic-card
     title="Tabla de Las Areas"
-    maxWidth="80%">
+    maxWidth="90%">
     <div card-content>
         <app-generic-table
             [data]="areas"
             [columns]="columnas"
             [paginador]="true"
             [filtro]="true"
-            [showActions]="false"
-            [pageSize]="10"/>
+            [pageSize]="10"
+            (edit)="editar($event)"/>
     </div>
 </app-generic-card>    

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, input, Input, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, input, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import * as L from 'leaflet';
 
 @Component({
@@ -7,22 +7,28 @@ import * as L from 'leaflet';
   templateUrl: './mapa.html',
   styleUrl: './mapa.scss'
 })
-export class Mapa implements AfterViewInit {
+export class Mapa implements AfterViewInit, OnChanges {
+
   private map!: L.Map;
   private miUbicacion!: L.Marker;
   private circle!: L.Circle;
-  private LATITUD: number = 28.698210;
-  private LONGITUD: number = -100.5145414;
+  @Input() LATITUD: number = 0;
+  @Input() LONGITUD: number = 0;
   @Input() RADIO: number = 50;
   @Output() coordenadasChange = new EventEmitter<{lat: number, lng: number}>();
+
   ngAfterViewInit(): void {
     this.initMap();
     this.getCurrentLocation();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+
+  }
+
   private initMap(): void {
      this.map = L.map('map', {
-      center: [this.LATITUD, this.LONGITUD], // CDMX por defecto
+      center: [this.LATITUD, this.LONGITUD], 
       zoom: 15,
     });
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(this.map);

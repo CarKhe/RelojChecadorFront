@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Mapa } from '../../../../shared/components/mapa/mapa';
 import { GenericSlider } from "../../../../../shared/components/generic-slider/generic-slider";
 import { FormGroup, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -6,7 +6,7 @@ import { GenericButton } from "../../../../../shared/components/generic-button/g
 import { GenericCard } from "../../../../../shared/components/generic-card/generic-card";
 import { GenericInput } from "../../../../../shared/components/generic-input/generic-input";
 import { AdminAreaService } from '../../../../../core/services/admin/admin-area-service';
-import { AreaFormDTO } from '../../../../../core/DTOs/admin/area-form.dto';
+import { AreaFormDTO, AreaTableDTO } from '../../../../../core/DTOs/admin/area-form.dto';
 
 @Component({
   selector: 'app-form-area',
@@ -14,11 +14,13 @@ import { AreaFormDTO } from '../../../../../core/DTOs/admin/area-form.dto';
   templateUrl: './form-area.html',
   styleUrl: './form-area.scss',
 })
-export class FormArea {
-  LATITUD: number = 0;
-  LONGITUD: number = 0;
+export class FormArea implements OnInit,OnChanges {
+  LATITUD: number = 28.698210;
+  LONGITUD: number = -100.5145414;
   RADIO = 10; 
   formulario!: FormGroup;
+  @Input() areaModificar?:AreaTableDTO; 
+  @Output() recargarTabla = new EventEmitter<void>();
 
   constructor(private fb: FormBuilder, private areaService: AdminAreaService) {}
 
@@ -32,7 +34,17 @@ export class FormArea {
     });
   }
 
-   recibirCoordenadas(coords: { lat: number; lng: number }) {
+  ngOnChanges(changes: SimpleChanges): void {
+     if(changes['areaModificar'] && this.areaModificar){
+        this.setModificar(this.areaModificar);
+     }
+  }
+
+  setModificar(areaMod: AreaTableDTO){
+    console.log(areaMod);
+  }
+
+  recibirCoordenadas(coords: { lat: number; lng: number }) {
     this.LATITUD = coords.lat;
     this.LONGITUD = coords.lng;
     this.formulario.patchValue({ centroLat: coords.lat, centroLon: coords.lng });
@@ -50,6 +62,7 @@ export class FormArea {
       next: (resp) =>{
         console.log('Area creado:', resp);
         this.formulario.reset(); 
+        this.recargarTabla.emit();
       },
       error: (err) => {
         console.error('Error al crear Area', err);

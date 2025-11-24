@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { GenericCard } from "../../../../../shared/components/generic-card/generic-card";
 import { GenericTable } from "../../../../../shared/components/generic-table/generic-table";
 import { ColumnasDTO } from '../../../../../core/DTOs/shared/columnas.dto';
@@ -14,6 +14,7 @@ import { AdminAreaService } from '../../../../../core/services/admin/admin-area-
 export class TableArea implements OnInit {
     columnas:ColumnasDTO[] = [];
     areas: AreaTableDTO[] = [];
+    @Output() sendToEdit = new EventEmitter<AreaTableDTO>;
 
   constructor(private areaService: AdminAreaService) {}
   ngOnInit(): void {
@@ -24,7 +25,6 @@ export class TableArea implements OnInit {
   getAreas(){
     this.areaService.getAreas().subscribe({
       next: (data) =>{
-        console.log(data);
         this.areas = [];
         this.areas = data;
       },
@@ -32,6 +32,10 @@ export class TableArea implements OnInit {
         console.error("Error en :",err);
       }
     });
+  }
+
+  editar(area: AreaTableDTO){
+    this.sendToEdit.emit(area);
   }
 
 }

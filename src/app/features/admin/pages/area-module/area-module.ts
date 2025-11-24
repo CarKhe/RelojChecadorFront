@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormArea } from "../../components/areas/form-area/form-area";
 import { TableArea } from "../../components/areas/table-area/table-area";
+import { AreaTableDTO } from '../../../../core/DTOs/admin/area-form.dto';
 
 @Component({
   selector: 'app-area-module',
@@ -9,5 +10,14 @@ import { TableArea } from "../../components/areas/table-area/table-area";
   styleUrl: './area-module.scss',
 })
 export class AreaModule {
+  areaMod?: AreaTableDTO;
+  @ViewChild('tabla') tabla!: TableArea;
+
+  ToModificar(area: AreaTableDTO){
+    this.areaMod = {...area}
+  }
+  recargarTabla(){
+    this.tabla.getAreas();
+  }
 
 }

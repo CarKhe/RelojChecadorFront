@@ -7,7 +7,11 @@
         maxWidth="80%">
         <div card-content>
             
-            <app-mapa [RADIO]="RADIO" (coordenadasChange)="recibirCoordenadas($event)"/>
+            <app-mapa 
+            [RADIO]="RADIO" 
+            [LATITUD]="LATITUD"
+            [LONGITUD]="LONGITUD"
+            (coordenadasChange)="recibirCoordenadas($event)"/>
             
             <app-generic-input label="Nombre" placeholder="Nombre Completo" 
                 type="text" controlName="nombre"/>
