@@ -4,6 +4,8 @@ import { GenericTable } from "../../../../../shared/components/generic-table/gen
 import { AdminUserService } from '../../../../../core/services/admin/admin-user-service';
 import { ColumnasDTO } from '../../../../../core/DTOs/shared/columnas.dto';
 import { UserTableDTO } from '../../../../../core/DTOs/admin/user-form.dto';
+import { SnackbarService } from '../../../../../shared/services/snackbar';
+import { LoaderService } from '../../../../../shared/services/loader-service';
 
 @Component({
   selector: 'app-table-user',
@@ -15,7 +17,9 @@ export class TableUser implements OnInit {
   columnas:ColumnasDTO[] = [];
   usuarios: UserTableDTO[] = [];
   @Output() enviarEditar = new EventEmitter<UserTableDTO>();
-  constructor(private userService: AdminUserService) {}
+  constructor(private userService: AdminUserService,
+              private snackBar: SnackbarService,
+              private loader: LoaderService) {}
 
   ngOnInit(): void {
     this.userService.getColumns().subscribe(data => this.columnas = data);
@@ -23,13 +27,16 @@ export class TableUser implements OnInit {
   }
 
   cargarUsuarios(){
+    this.loader.show();
     this.userService.getUsers().subscribe({
       next: (data) => {
         this.usuarios = [];
         this.usuarios = data;
+        this.loader.hide();
       },
       error: (err) => {
-        console.error('Error al cargar usuarios', err);
+        this.loader.hide();
+        this.snackBar.error(err.message);
       }
     });
   }

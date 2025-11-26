@@ -9,13 +9,17 @@ import { AdminUserService } from '../../../../../core/services/admin/admin-user-
 import { RolesDTO } from '../../../../../core/DTOs/admin/roles.dto';
 import { UserFormDTO, UserTableDTO } from '../../../../../core/DTOs/admin/user-form.dto';
 import { AdminRolesService } from '../../../../../core/services/admin/admin-roles-service';
+import { SnackbarService } from '../../../../../shared/services/snackbar';
+import { LoaderService } from '../../../../../shared/services/loader-service';
+import { ChipItem } from '../../../../../shared/DTOs/chip-item.dto';
+import { GenericChipSelect } from "../../../../../shared/components/generic-chip-select/generic-chip-select";
 
 
 @Component({
   selector: 'app-form-user',
   imports: [GenericCard, GenericInput,
     GenericSelect, GenericButton,
-    MatFormFieldModule, ReactiveFormsModule],
+    MatFormFieldModule, ReactiveFormsModule, GenericChipSelect],
   templateUrl: './form-user.html',
   styleUrl: './form-user.scss',
 })
@@ -27,26 +31,30 @@ export class FormUser implements OnInit, OnChanges {
   roles: RolesDTO[] = [];
   crearUsuario: boolean = true;
 
+  categorias: ChipItem[] = [
+    { id: 1, label: 'Frutas' },
+    { id: 2, label: 'Verduras' },
+    { id: 3, label: 'Carnes' },
+  ];
+
+  seleccionados: number[] = []; 
+
   constructor(private fb: FormBuilder, private userService: AdminUserService,
-              private rolService: AdminRolesService) {
+              private rolService: AdminRolesService,
+              private snackBar: SnackbarService, 
+              private loader: LoaderService){
     this.formulario = this.fb.group({
       id: [ 0 ],
       nombre: ['', Validators.required],
       telefono: ['', Validators.required],
       passwordHash: ['', Validators.required],
-      idRol: [ 0 ]
+      idRol: [ 0 ],
+      idAreas: [[]]
     });
   }
 
   ngOnInit(): void {
-    this.rolService.getRoles().subscribe({
-      next: (data) => {
-        this.roles = data;
-      },
-      error: (err) => {
-        console.error('Error al cargar usuarios', err);
-      }
-    });
+    this.getRoles();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -55,8 +63,23 @@ export class FormUser implements OnInit, OnChanges {
     }
   }
 
+  getRoles(){
+    this.loader.show();
+    this.rolService.getRoles().subscribe({
+      next: (data) => {
+        this.roles = data;
+        this.loader.hide();
+      },
+      error: (err) => {
+        this.loader.hide();
+        this.snackBar.error(err.message);
+      }
+    });
+  }
+
   guardar() {
     const areaForm: UserFormDTO = this.formulario.value;
+    console.log(areaForm);
     this.userService.postUsuario(areaForm).subscribe({
       next: (resp) =>{
         console.log('Usuario creado:', resp);

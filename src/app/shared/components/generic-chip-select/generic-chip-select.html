@@ -1,0 +1,9 @@
+<mat-chip-listbox multiple>
+  @for (item of items; track item.id) {
+    <mat-chip-option
+      [selected]="selected.includes(item.id)"
+      (click)="toggleSelection(item.id)">
+      {{ item.label }}
+    </mat-chip-option>
+  }
+</mat-chip-listbox>

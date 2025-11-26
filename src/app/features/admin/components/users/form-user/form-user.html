@@ -16,6 +16,11 @@
           
             <app-generic-select label="Rol" controlName="idRol" [options]="roles" 
                 displayField="rol" valueField="idRol"/>
+            
+            <app-generic-chip-select
+                [items]="categorias"
+                [selected]="seleccionados"
+                 (selectedChange)="formulario.patchValue({ idAreas: $event })" />
 
         </div>
         <div card-botones #cardBotones>

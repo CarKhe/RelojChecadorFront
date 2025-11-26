@@ -1,0 +1,13 @@
+@use '@angular/material' as mat;
+
+mat-chip-listbox  {
+  @include mat.chips-overrides((
+    elevated-selected-container-color: var(--mat-sys-tertiary),
+    selected-label-text-color: var(--mat-sys-on-tertiary),
+    with-icon-selected-icon-color: var(--mat-sys-on-tertiary)
+  ))}
+
+mat-chip-option {
+  margin: 4px;
+  cursor: pointer;
+}
