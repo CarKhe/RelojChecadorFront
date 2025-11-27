@@ -18,9 +18,10 @@
                 displayField="rol" valueField="idRol"/>
             
             <app-generic-chip-select
-                [items]="categorias"
+                label="Selecciona Areas Permitidas"
+                [items]="areasCat"
                 [selected]="seleccionados"
-                 (selectedChange)="formulario.patchValue({ idAreas: $event })" />
+                (selectedChange)="formulario.patchValue({ idAreas: $event })" />
 
         </div>
         <div card-botones #cardBotones>

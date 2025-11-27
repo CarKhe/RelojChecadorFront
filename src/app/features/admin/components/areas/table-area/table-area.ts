@@ -38,4 +38,15 @@ export class TableArea implements OnInit {
     this.sendToEdit.emit(area);
   }
 
+  eliminar(area: AreaTableDTO){
+    this.areaService.toogleAreas(area.id).subscribe({
+      next: (data) =>{
+        console.log("Toogle: " +data);
+      },
+      error: (err) =>{
+        console.error(err);
+      }
+    });
+  }
+
 }

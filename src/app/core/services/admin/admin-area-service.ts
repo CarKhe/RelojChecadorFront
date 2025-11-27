@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment.development';
 import { Observable, of } from 'rxjs';
 import { ColumnasDTO } from '../../DTOs/shared/columnas.dto';
+import { ChipItem } from '../../../shared/DTOs/chip-item.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -30,8 +31,16 @@ export class AdminAreaService {
   getAreas(): Observable<AreaTableDTO[]> {
     return this.http.get<AreaTableDTO[]>(this.apiRoute);
   }
+
+  getAreaChip(): Observable<ChipItem[]>{
+    return this.http.get<ChipItem[]>(`${this.apiRoute}/chip`);
+  }
   
   postArea(areaForm: AreaFormDTO):Observable<any>{
     return this.http.post<AreaFormDTO>(this.apiRoute, areaForm);
+  }
+
+  toogleAreas(id: number): Observable<any>{
+    return this.http.delete(`${this.apiRoute}/${id}`);
   }
 }

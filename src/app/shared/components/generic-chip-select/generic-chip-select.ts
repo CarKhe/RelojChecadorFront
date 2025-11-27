@@ -11,7 +11,8 @@ import { ChipItem } from '../../DTOs/chip-item.dto';
   styleUrl: './generic-chip-select.scss',
 })
 export class GenericChipSelect {
-
+  
+  @Input() label?: string;
   @Input() items: ChipItem[] = [];        // Lista de chips a mostrar
   @Input() selected: number[] = [];       // IDs seleccionados
   @Output() selectedChange = new EventEmitter<number[]>(); // Emisor

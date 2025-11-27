@@ -11,3 +11,23 @@ mat-chip-option {
   margin: 4px;
   cursor: pointer;
 }
+
+.chip-select-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+.chip-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #424242;
+  margin-bottom: 4px;
+}
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+

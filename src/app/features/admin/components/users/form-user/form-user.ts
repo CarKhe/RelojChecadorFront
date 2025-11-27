@@ -13,6 +13,7 @@ import { SnackbarService } from '../../../../../shared/services/snackbar';
 import { LoaderService } from '../../../../../shared/services/loader-service';
 import { ChipItem } from '../../../../../shared/DTOs/chip-item.dto';
 import { GenericChipSelect } from "../../../../../shared/components/generic-chip-select/generic-chip-select";
+import { AdminAreaService } from '../../../../../core/services/admin/admin-area-service';
 
 
 @Component({
@@ -29,18 +30,13 @@ export class FormUser implements OnInit, OnChanges {
 
   formulario: FormGroup;
   roles: RolesDTO[] = [];
+  areasCat: ChipItem[] = [];
   crearUsuario: boolean = true;
-
-  categorias: ChipItem[] = [
-    { id: 1, label: 'Frutas' },
-    { id: 2, label: 'Verduras' },
-    { id: 3, label: 'Carnes' },
-  ];
-
   seleccionados: number[] = []; 
 
   constructor(private fb: FormBuilder, private userService: AdminUserService,
               private rolService: AdminRolesService,
+              private areaService: AdminAreaService,
               private snackBar: SnackbarService, 
               private loader: LoaderService){
     this.formulario = this.fb.group({
@@ -55,6 +51,7 @@ export class FormUser implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.getRoles();
+    this.getAreas();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -68,6 +65,20 @@ export class FormUser implements OnInit, OnChanges {
     this.rolService.getRoles().subscribe({
       next: (data) => {
         this.roles = data;
+        this.loader.hide();
+      },
+      error: (err) => {
+        this.loader.hide();
+        this.snackBar.error(err.message);
+      }
+    });
+  }
+
+  getAreas(){
+    this.loader.show();
+    this.areaService.getAreaChip().subscribe({
+      next: (data) => {
+        this.areasCat = data;
         this.loader.hide();
       },
       error: (err) => {

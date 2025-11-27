@@ -4,6 +4,7 @@ export interface UserFormDTO {
     telefono: string;
     passwordHash: string;
     idRol: number; 
+    idAreas: number[];
 }
 
 export interface UserTableDTO {
