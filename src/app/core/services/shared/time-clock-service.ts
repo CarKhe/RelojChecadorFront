@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { RegistroAsistenciaDTO } from '../../DTOs/shared/registro-asistencia.dto';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment.development';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,16 +10,17 @@ import { HttpClient } from '@angular/common/http';
 export class TimeClockService {
 
   constructor(private http: HttpClient){}
+  private apiRoute = environment.API_ROUTE + "Asistencia";
   
-  enviarDatos(datos: RegistroAsistenciaDTO){
-    console.log(datos);
+  enviarDatos(datos: RegistroAsistenciaDTO):Observable<any>{
+    return this.http.post<RegistroAsistenciaDTO>(this.apiRoute,datos);
   }
 
   statusAnterior():boolean{
-    return Math.random() < 0.5;
+    return true;
   }
 
   statusDeshabilitado():boolean{
-    return Math.random() < 0.5;
+    return false;
   }
 }

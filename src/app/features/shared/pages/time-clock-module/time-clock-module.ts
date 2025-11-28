@@ -6,6 +6,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Geolocalizacion } from '../../../../core/services/shared/geolocalizacion';
 import { TimeClockService } from '../../../../core/services/shared/time-clock-service';
 import { RegistroAsistenciaDTO } from '../../../../core/DTOs/shared/registro-asistencia.dto';
+import { SnackbarService } from '../../../../shared/services/snackbar';
 
 @Component({
   selector: 'app-time-clock-module',
@@ -22,7 +23,8 @@ export class TimeClockModule implements OnInit, OnDestroy {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private geolocalizacion: Geolocalizacion,
-    private timeClockService: TimeClockService) {}
+    private timeClockService: TimeClockService,
+    private snackBar: SnackbarService, ) {}
 
   ngOnInit(): void {
       this.timer = setInterval(() => {
@@ -62,12 +64,22 @@ export class TimeClockModule implements OnInit, OnDestroy {
       const lat = pos.coords.latitude;
       const lon = pos.coords.longitude;
       const datos: RegistroAsistenciaDTO = {
-        tipo: tipo ? 'SALIDA' : 'ENTRADA',
-        fecha: new Date(),
+        idUsuario: 1,
+        idMovimiento: tipo ? 2: 1,
         latitud: lat,
-        longitud: lon
+        longitud: lon,
+        idArea: 0,
+        dentroZona: 0
       };
-      this.timeClockService.enviarDatos(datos);
+      this.timeClockService.enviarDatos(datos).subscribe({
+        next: (data) => {
+          this.snackBar.success(data.message);
+          console.log(data);
+        },
+        error: (err) => {
+          this.snackBar.error(err.message);
+        }
+      });
     } catch(error){
        console.error('Error al obtener ubicación:', error);
     }

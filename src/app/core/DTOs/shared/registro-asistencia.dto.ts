@@ -1,6 +1,8 @@
 export interface RegistroAsistenciaDTO {
-  tipo: 'ENTRADA' | 'SALIDA';
-  fecha: Date;
+  idUsuario: number;
+  idMovimiento: number;
+  idArea: number;
   latitud: number;
   longitud: number;
+  dentroZona: number;
 }
