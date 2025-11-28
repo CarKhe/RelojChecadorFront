@@ -1,32 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginFormDTO } from '../../DTOs/auth/login-form.dto';
-import { AuthUserDTO } from '../../DTOs/auth/auth-user.dto';
 import { createFakeJWT, decodeJWT, isTokenExpired } from '../utils/jwt-test';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment.development';
+import { catchError, map, Observable, of } from 'rxjs';
+import { AuthResponseDTO } from '../../DTOs/auth/auth-user.dto';
 
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   
-  private currentUser: AuthUserDTO | null = null;
+  private currentUser: AuthResponseDTO | null = null;
 
-  constructor(private router: Router){
+  constructor(private router: Router, private http: HttpClient){
     const raw = localStorage.getItem('auth');
     if (raw) this.currentUser = JSON.parse(raw);
   }
+  private apiRoute = environment.API_ROUTE + "Auth";
 
-  login(dto: LoginFormDTO): boolean {
-
-    if((dto.username === 'admin' || dto.username === 'user') && dto.password === '1234'){
-      const role = dto.username === 'admin' ? 'admin' : 'user';
-      const payload = { sub: dto.username, role };
-      const token = createFakeJWT(payload, 60 * 30); // 30 min por ejemplo
-
-      this.currentUser = { username: dto.username, role, token };
-      localStorage.setItem('auth', JSON.stringify(this.currentUser));
-      return true;
-    }
-    return true;
+  login(dto: LoginFormDTO): Observable<boolean> {
+    return this.http.post<AuthResponseDTO>(`${this.apiRoute}/login`, dto).pipe(
+      map(resp => {
+        localStorage.setItem('token', resp.token);
+        localStorage.setItem('user', JSON.stringify(resp.user));
+        return true;
+      }),
+      catchError(() => of(false))
+    );
   }
 
   logout() {
@@ -43,9 +44,9 @@ export class AuthService {
     const token = this.getToken();
     if (token) {
       const payload = decodeJWT(token);
-      return payload?.role ?? this.currentUser?.role ?? null;
+      return payload?.role ?? this.currentUser?.user.role ?? null;
     }
-    return this.currentUser?.role ?? null;
+    return this.currentUser?.user.role ?? null;
   }
 
   isAuthenticated(): boolean {
@@ -72,12 +73,6 @@ export class AuthService {
   }
 
 
-  // getUser() {
-  //   if (!this.currentUser) {
-  //     const stored = localStorage.getItem('auth');
-  //     if (stored) this.currentUser = JSON.parse(stored);
-  //   }
-  //   return this.currentUser;
-  // }
+
 
 }

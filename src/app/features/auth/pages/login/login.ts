@@ -25,16 +25,16 @@ export class Login {
               private authService: AuthService,
               private router: Router) {
     this.formulario = this.fb.group({
-      user: ['',[Validators.required]],
-      pass: ['',[Validators.required]]
+      telefono: ['',[Validators.required]],
+      passwordHash: ['',[Validators.required]]
     });
   }
 
   login(){
     if (this.formulario.invalid) return;
     const dto: LoginFormDTO = {
-      username: this.formulario.value.user,
-      password: this.formulario.value.pass
+      telefono: this.formulario.value.telefono,
+      passwordHash: this.formulario.value.passwordHash
     };
     const ok = this.authService.login(dto);
 

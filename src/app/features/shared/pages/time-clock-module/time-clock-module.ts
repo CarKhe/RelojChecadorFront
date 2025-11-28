@@ -73,7 +73,7 @@ export class TimeClockModule implements OnInit, OnDestroy {
       };
       this.timeClockService.enviarDatos(datos).subscribe({
         next: (data) => {
-          this.snackBar.success(data.message);
+          this.snackBar.success(data);
           console.log(data);
         },
         error: (err) => {

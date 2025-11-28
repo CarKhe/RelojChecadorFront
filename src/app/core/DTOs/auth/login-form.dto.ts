@@ -1,4 +1,5 @@
 export interface LoginFormDTO {
-    username: string;
-    password: string;
+    telefono: string;
+    passwordHash: string;
 }
+
