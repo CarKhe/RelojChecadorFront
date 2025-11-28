@@ -11,13 +11,9 @@ export class AdminRolesService {
   constructor(private http: HttpClient){}
   private apiRoute = environment.API_ROUTE + "Roles"
 
-  rolLocal: RolesDTO[] = [
-    { idRol: 1, rol: 'admin' },
-    { idRol: 2, rol: 'usuario' }
-  ];
+
 
   getRoles():Observable<RolesDTO[]>{
-    return of(this.rolLocal); //local
-    //return this.http.get<RolesDTO[]>(this.apiRoute); //api
+    return this.http.get<RolesDTO[]>(this.apiRoute); //api
   }
 }

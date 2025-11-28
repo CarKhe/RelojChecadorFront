@@ -95,6 +95,7 @@ export class FormUser implements OnInit, OnChanges {
       next: (resp) =>{
         console.log('Usuario creado:', resp);
         this.formulario.reset(); 
+        this.seleccionados = [];
         this.recargarTabla.emit();
       },
       error: (err) => {
@@ -110,6 +111,7 @@ export class FormUser implements OnInit, OnChanges {
         next: (resp) => {
           console.log('Usuario Modificado', resp);
           this.formulario.reset(); 
+          this.seleccionados = [];
           this.recargarTabla.emit();
         },
         error: (err) => {
@@ -128,8 +130,10 @@ export class FormUser implements OnInit, OnChanges {
           nombre: data.nombre,
           telefono: data.telefono,
           passwordHash: data.passwordHash,
-          idRol: data.idRol
+          idRol: data.idRol,
+          idAreas: data.idAreas
         });
+        this.seleccionados = data.idAreas;
         this.formulario.markAsPristine();
         this.crearUsuario = false;
       },
@@ -144,6 +148,7 @@ export class FormUser implements OnInit, OnChanges {
     this.formulario.reset(); 
     this.formulario.markAsPristine();
     this.crearUsuario = true;
+    this.seleccionados = [];
   }
 
 }
