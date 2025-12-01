@@ -36,13 +36,19 @@ export class Login {
       telefono: this.formulario.value.telefono,
       passwordHash: this.formulario.value.passwordHash
     };
-    const ok = this.authService.login(dto);
-
-    if (!ok) {
-      console.log("Credenciales incorrectas");
-      return;
-    }
-    const role = this.authService.getRole();
-    this.router.navigate([`/${role}`]);
+    this.authService.login(dto).subscribe({
+      next: (data) =>{
+        if(!data){
+          console.log("Credenciales incorrectas");
+          this.formulario.reset(); 
+          return;
+        }
+        const role = this.authService.getRole();
+        this.router.navigate([`/${role}`]);
+      },
+      error: (err) =>{
+        console.error(err);
+      }
+    });
   }
 }

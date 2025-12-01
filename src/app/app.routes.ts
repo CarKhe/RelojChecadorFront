@@ -12,14 +12,21 @@ export const routes: Routes = [
     {
         path: 'user',
         canActivate: [authGuard,roleGuard],
-        data: { role: 'user' },
+        data: { role: ['user'] },
         loadChildren: () =>
             import('./features/user/user-routing-module').then(m => m.USER_ROUTES)
     },
     {
         path: 'admin',
         canActivate: [authGuard,roleGuard],
-        data: { role: 'admin' },
+        data: { role: ['admin','master']},
+        loadChildren: () =>
+            import('./features/admin/admin-routing-module').then(m => m.ADMIN_ROUTES)
+    },
+    {
+        path: 'master',
+        canActivate: [authGuard,roleGuard],
+        data: { role: ['admin','master']},
         loadChildren: () =>
             import('./features/admin/admin-routing-module').then(m => m.ADMIN_ROUTES)
     },

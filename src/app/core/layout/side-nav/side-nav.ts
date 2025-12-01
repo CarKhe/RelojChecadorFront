@@ -20,7 +20,10 @@ export class SideNav implements OnInit {
   constructor(private authService: AuthService, private layoutService: LayoutService) {}
 
   ngOnInit(): void {
-    const rol = this.authService.getRole();
+    let rol = this.authService.getRole();
+    if (rol === 'master') {
+      rol = 'admin';
+    }
     this.menuItems = this.getMenuNavBar(rol);
   }
 
