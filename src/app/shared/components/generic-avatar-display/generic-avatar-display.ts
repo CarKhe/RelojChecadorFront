@@ -15,7 +15,7 @@ export class GenericAvatarDisplay {
   @Input() alt: string = 'Avatar';
 
   /** Nombre opcional debajo del avatar */
-  @Input() name?: string;
+  @Input() name: string = '';
 
   /** Tamaño del avatar (px o rem) */
   @Input() size: string = '80px';

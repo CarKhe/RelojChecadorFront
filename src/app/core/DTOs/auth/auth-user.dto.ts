@@ -1,6 +1,6 @@
 export interface UserAuthDTO {
   idUser: number;
-  username: string;
+  nombre: string;
   idRol: number;
   role: string
 }

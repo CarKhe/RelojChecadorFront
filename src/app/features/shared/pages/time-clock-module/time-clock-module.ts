@@ -5,8 +5,10 @@ import { CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Geolocalizacion } from '../../../../core/services/shared/geolocalizacion';
 import { TimeClockService } from '../../../../core/services/shared/time-clock-service';
-import { RegistroAsistenciaDTO } from '../../../../core/DTOs/shared/registro-asistencia.dto';
+import { LastRegisterDTO, RegistroAsistenciaDTO } from '../../../../core/DTOs/shared/registro-asistencia.dto';
 import { SnackbarService } from '../../../../shared/services/snackbar';
+import { AuthService } from '../../../../core/services/auth/auth-service';
+import { UserAuthDTO } from '../../../../core/DTOs/auth/auth-user.dto';
 
 @Component({
   selector: 'app-time-clock-module',
@@ -20,11 +22,14 @@ export class TimeClockModule implements OnInit, OnDestroy {
   tamanioBoton: string = '';
   deshabilitado: boolean = false;
   asistenciaStatus: boolean = true;
+  userData: UserAuthDTO | null = null;
+
   constructor(
     private breakpointObserver: BreakpointObserver,
     private geolocalizacion: Geolocalizacion,
     private timeClockService: TimeClockService,
-    private snackBar: SnackbarService, ) {}
+    private snackBar: SnackbarService,
+    private auth: AuthService ) {}
 
   ngOnInit(): void {
       this.timer = setInterval(() => {
@@ -51,7 +56,24 @@ export class TimeClockModule implements OnInit, OnDestroy {
 
     });
 
-    this.asistenciaStatus = this.timeClockService.statusAnterior();
+    this.userData = this.auth.getUserData();
+
+    if (!this.userData){ this.auth.logout(); return; }
+    
+    const statusDTO: LastRegisterDTO = {
+      idUsuario: this.userData.idUser
+    }
+    this.timeClockService.statusAnterior(statusDTO).subscribe({
+      next: (value) => {
+        if (value === 1) {
+          this.asistenciaStatus = false;
+        }
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+
     this.deshabilitado = this.timeClockService.statusDeshabilitado();
   }
   ngOnDestroy(): void {
@@ -63,9 +85,10 @@ export class TimeClockModule implements OnInit, OnDestroy {
       const pos = await this.geolocalizacion.obtenerUbicacion();
       const lat = pos.coords.latitude;
       const lon = pos.coords.longitude;
+      if (!this.userData) return;
       const datos: RegistroAsistenciaDTO = {
-        idUsuario: 1,
-        idMovimiento: tipo ? 2: 1,
+        idUsuario: this.userData.idUser,
+        idMovimiento: tipo ? 2 : 1,
         latitud: lat,
         longitud: lon,
         idArea: 0,
@@ -73,8 +96,7 @@ export class TimeClockModule implements OnInit, OnDestroy {
       };
       this.timeClockService.enviarDatos(datos).subscribe({
         next: (data) => {
-          this.snackBar.success(data);
-          console.log(data);
+          this.snackBar.success(data.mensaje);
         },
         error: (err) => {
           this.snackBar.error(err.message);
@@ -85,7 +107,4 @@ export class TimeClockModule implements OnInit, OnDestroy {
     }
   }
   
-
-
-
 }

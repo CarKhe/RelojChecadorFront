@@ -6,3 +6,7 @@ export interface RegistroAsistenciaDTO {
   longitud: number;
   dentroZona: number;
 }
+
+export interface LastRegisterDTO {
+  idUsuario: number;
+}

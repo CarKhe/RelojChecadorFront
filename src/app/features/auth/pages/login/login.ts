@@ -9,6 +9,8 @@ import { GenericButton } from '../../../../shared/components/generic-button/gene
 import { AuthService } from '../../../../core/services/auth/auth-service';
 import { LoginFormDTO } from '../../../../core/DTOs/auth/login-form.dto';
 import { Router } from '@angular/router';
+import { DeviceService } from '../../../../core/services/auth/device-service';
+import { SnackbarService } from '../../../../shared/services/snackbar';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +25,9 @@ export class Login {
   formulario: FormGroup;
   constructor(private fb: FormBuilder, 
               private authService: AuthService,
-              private router: Router) {
+              private router: Router,
+              private deviceService: DeviceService,
+              private snackBar: SnackbarService) {
     this.formulario = this.fb.group({
       telefono: ['',[Validators.required]],
       passwordHash: ['',[Validators.required]]
@@ -32,22 +36,25 @@ export class Login {
 
   login(){
     if (this.formulario.invalid) return;
+    const deviceUUID = this.deviceService.getUUID();
     const dto: LoginFormDTO = {
       telefono: this.formulario.value.telefono,
-      passwordHash: this.formulario.value.passwordHash
+      passwordHash: this.formulario.value.passwordHash,
+      deviceUUID: deviceUUID
     };
+
     this.authService.login(dto).subscribe({
-      next: (data) =>{
-        if(!data){
-          console.log("Credenciales incorrectas");
-          this.formulario.reset(); 
-          return;
-        }
-        const role = this.authService.getRole();
+      next: (resp) => {
+        const role = this.authService.getRole(); 
         this.router.navigate([`/${role}`]);
       },
-      error: (err) =>{
-        console.error(err);
+      error: (err) => {
+        if (err.status === 401) {
+          this.snackBar.error(err.error?.mensaje || "Credenciales inválidas o dispositivo no autorizado");
+        } else {
+          this.snackBar.error("Ocurrió un error inesperado.");
+        }
+        this.formulario.reset();
       }
     });
   }
