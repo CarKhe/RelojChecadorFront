@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { RolesDTO } from '../../DTOs/admin/roles.dto';
 import { Observable, of } from 'rxjs';
 import { UserFormDTO, UserTableDTO } from '../../DTOs/admin/user-form.dto';
-import { ColumnasDTO } from '../../DTOs/shared/columnas.dto';
+import { ColumnasDTO, TableAction } from '../../DTOs/shared/columnas.dto';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment.development';
 
@@ -12,11 +12,12 @@ import { environment } from '../../../../environments/environment.development';
 export class AdminUserService {
 
   private columnas: ColumnasDTO[] = [
-    { field: 'id', label: 'ID' },
     { field: 'nombre', label: 'Nombre' },
     { field: 'telefono', label: 'Telefono' },
     { field: 'rol', label: 'Rol' },
   ];
+
+
 
   constructor(private http: HttpClient) {}
   private apiRoute = environment.API_ROUTE + "Usuarios";
@@ -28,6 +29,8 @@ export class AdminUserService {
   getColumns(): Observable<ColumnasDTO[]>{
     return of(this.columnas);
   }
+
+
 
 
   postUsuario(userForm: UserFormDTO):Observable<any>{
@@ -45,6 +48,10 @@ export class AdminUserService {
 
   softDeleteUser(id: number):Observable<any>{
     return this.http.delete(`${this.apiRoute}/${id}`);
+  }
+
+  nullUUID(id: number):Observable<any>{
+    return this.http.delete(`${this.apiRoute}/deleteUUID/${id}`);
   }
 
 }

@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CapitalizePipe } from "../../pipes/capitalize-pipe";
 import { TruncatePipe } from "../../pipes/truncate-pipe";
+import { GenericButtonColor } from '../../DTOs/generic-colors.dto';
 
 @Component({
   selector: 'app-generic-button',
@@ -13,7 +14,7 @@ import { TruncatePipe } from "../../pipes/truncate-pipe";
 })
 export class GenericButton {
   @Input() label: string = '';
-  @Input() color: 'primary' | 'secondary' | 'tertiary' |'info' | 'warning' | 'error' | 'success' | undefined;
+  @Input() color: GenericButtonColor | undefined = 'primary';
   @Input() type:
     | 'basic'
     | 'elevated'

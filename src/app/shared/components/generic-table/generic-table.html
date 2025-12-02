@@ -18,9 +18,9 @@
       <td mat-cell *matCellDef="let element">
         @if(col.pipe){
            @switch(col.pipe){
-                @case('customDate'){
-                  {{ element[col.field] | customDatePipe : col.pipeArgs?.[0] ?? 'DD/MM/YYYY HH:mm'}}
-                }
+              @case('customDate'){
+                {{ element[col.field] | customDatePipe : col.pipeArgs?.[0] ?? 'DD/MM/YYYY HH:mm'}}
+              }
            }
         }
         @else {
@@ -36,8 +36,17 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Acciones </th>
       <td mat-cell *matCellDef="let element">
-        <app-generic-button  color="tertiary" type="icon" icon="edit" (click)="edit.emit(element)" [emmit]="false" /> 
-        <app-generic-button color="error" type="icon" icon="delete" (click)="delete.emit(element)" [emmit]="false" /> 
+        @for (action of actions; track $index) {
+          @if (isVisible(action, element)){
+            <app-generic-button  
+              [type]="'icon'"
+              [icon]="typeof action.icon === 'function' ? action.icon(element) : action.icon"
+              [color]="typeof action.color === 'function' ? action.color(element) : action.color"
+              (click)="action.onClick(element)"
+              [emmit]="false"
+            />
+          }
+        }
       </td>
     </ng-container>
   }

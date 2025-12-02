@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { GenericCard } from "../../../../../shared/components/generic-card/generic-card";
 import { GenericTable } from "../../../../../shared/components/generic-table/generic-table";
-import { ColumnasDTO } from '../../../../../core/DTOs/shared/columnas.dto';
+import { ColumnasDTO, TableAction } from '../../../../../core/DTOs/shared/columnas.dto';
 import { AreaTableDTO } from '../../../../../core/DTOs/admin/area-form.dto';
 import { AdminAreaService } from '../../../../../core/services/admin/admin-area-service';
 
@@ -14,6 +14,14 @@ import { AdminAreaService } from '../../../../../core/services/admin/admin-area-
 export class TableArea implements OnInit {
     columnas:ColumnasDTO[] = [];
     areas: AreaTableDTO[] = [];
+    actions: TableAction[]= [
+        {
+          icon: (row) => row.activo ? 'toggle_on' : 'toggle_off',
+          color: (row) => row.activo ? 'success' : 'error',
+          visible: () => true,
+          onClick: (row) => this.eliminar(row),
+        }
+      ];
     @Output() sendToEdit = new EventEmitter<AreaTableDTO>;
 
   constructor(private areaService: AdminAreaService) {}
@@ -41,7 +49,7 @@ export class TableArea implements OnInit {
   eliminar(area: AreaTableDTO){
     this.areaService.toogleAreas(area.id).subscribe({
       next: (data) =>{
-        console.log("Toogle: " +data);
+        this.getAreas();
       },
       error: (err) =>{
         console.error(err);

@@ -15,7 +15,6 @@ export class AdminDashboardService {
     { field: 'usuario', label: 'EMPLEADO' },
     { field: 'area', label: 'AREA' },
     { field: 'movimiento', label: 'Movimiento' },
-    { field: 'dentroZona', label: 'Zona' },
     { field: 'fechaHora', label: 'Hora' , pipe: 'customDate', pipeArgs: ['DD/MM/YYYY HH:mm'] },
   ];
 

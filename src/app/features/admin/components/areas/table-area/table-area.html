@@ -5,9 +5,10 @@
         <app-generic-table
             [data]="areas"
             [columns]="columnas"
+            [actions]="actions"
             [paginador]="true"
             [filtro]="true"
-            [pageSize]="10"
+            [pageSize]="3"
             (edit)="editar($event)"
             (delete)="eliminar($event)"/>
     </div>

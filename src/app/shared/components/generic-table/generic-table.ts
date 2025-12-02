@@ -9,7 +9,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { GenericButton } from '../generic-button/generic-button';
-import { ColumnasDTO } from '../../../core/DTOs/shared/columnas.dto';
+import { ColumnasDTO, TableAction } from '../../../core/DTOs/shared/columnas.dto';
 import { CustomDatePipePipe } from "../../pipes/custom-date-pipe-pipe";
 
 @Component({
@@ -36,6 +36,8 @@ export class GenericTable<T= any> implements AfterViewInit {
   @Input() columns: ColumnasDTO[] = [];
   /** Si se muestran botones de acción */
   @Input() showActions = true;
+  /** Los botones de Acciones genericos */
+  @Input() actions: TableAction[] = [];
   /** Mostrar paginador */
   @Input() paginador = false;
 
@@ -74,5 +76,21 @@ export class GenericTable<T= any> implements AfterViewInit {
   aplicarFiltro(): void {
     this._dataSource.filter = this.filtroTexto.trim().toLowerCase();
   }
+  /*Funcion encargada de dar la visibilidad a un boton o no dependiendo una condificon */
+  isVisible(action: TableAction, row: any): boolean {
+    // Si visible no existe → visible = true
+    if (action.visible === undefined || action.visible === null) {
+      return true;
+    }
+
+    // Si visible es una función → ejecutarla
+    if (typeof action.visible === "function") {
+      return action.visible(row);
+    }
+
+    // Si visible es boolean → usar el valor tal cual
+    return action.visible;
+  }
+
 
 }
