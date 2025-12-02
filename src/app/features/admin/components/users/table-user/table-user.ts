@@ -26,7 +26,7 @@ export class TableUser implements OnInit {
     {
       icon: (row) => row.activo ? 'toggle_on' : 'toggle_off',
       color: (row) => row.activo ? 'success' : 'error',
-      visible: () => true,
+      visible: (row) => row.rol == 'MASTER'? false: true,
       onClick: (row) => this.eliminar(row),
     },
     {
