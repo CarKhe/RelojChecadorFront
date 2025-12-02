@@ -9,6 +9,8 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { GenericButton } from '../generic-button/generic-button';
+import { ColumnasDTO } from '../../../core/DTOs/shared/columnas.dto';
+import { CustomDatePipePipe } from "../../pipes/custom-date-pipe-pipe";
 
 @Component({
   selector: 'app-generic-table',
@@ -18,7 +20,7 @@ import { GenericButton } from '../generic-button/generic-button';
     FormsModule,
     MatSortModule,
     MatFormFieldModule,
-    MatInputModule],
+    MatInputModule, CustomDatePipePipe],
   templateUrl: './generic-table.html',
   styleUrl: './generic-table.scss',
 })
@@ -31,7 +33,7 @@ export class GenericTable<T= any> implements AfterViewInit {
     return this._dataSource.data;
   }
   /** Definición de columnas: [{ field: 'nombre', label: 'Nombre' }] */
-  @Input() columns: { field: string; label: string }[] = [];
+  @Input() columns: ColumnasDTO[] = [];
   /** Si se muestran botones de acción */
   @Input() showActions = true;
   /** Mostrar paginador */

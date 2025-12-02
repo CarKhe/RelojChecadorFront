@@ -16,7 +16,7 @@ export class AdminDashboardService {
     { field: 'area', label: 'AREA' },
     { field: 'movimiento', label: 'Movimiento' },
     { field: 'dentroZona', label: 'Zona' },
-    { field: 'fechaHora', label: 'Hora' },
+    { field: 'fechaHora', label: 'Hora' , pipe: 'customDate', pipeArgs: ['DD/MM/YYYY HH:mm'] },
   ];
 
   constructor(private http: HttpClient) {}
@@ -34,4 +34,6 @@ export class AdminDashboardService {
   getColumnas(): Observable<ColumnasDTO[]> {
     return of(this.columnas);
   }
+
+
 }

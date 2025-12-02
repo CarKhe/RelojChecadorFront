@@ -16,7 +16,17 @@
     <ng-container [matColumnDef]="col.field">
       <th mat-header-cell *matHeaderCellDef>{{ col.label }}</th>
       <td mat-cell *matCellDef="let element">
-        {{ element[col.field] }}
+        @if(col.pipe){
+           @switch(col.pipe){
+                @case('customDate'){
+                  {{ element[col.field] | customDatePipe : col.pipeArgs?.[0] ?? 'DD/MM/YYYY HH:mm'}}
+                }
+           }
+        }
+        @else {
+          {{ element[col.field] }}
+        }
+        
       </td>
     </ng-container>
   }

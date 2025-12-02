@@ -18,7 +18,7 @@ export class AdminAreaService {
       { field: 'centroLat', label: 'Latitud' },
       { field: 'centroLon', label: 'Longitud' },
       { field: 'radio', label: 'Radio' },
-      { field: 'fechaCreacion', label: 'Fecha Creacion' },
+      { field: 'fechaCreacion', label: 'Fecha Creacion', pipe: 'customDate' },
   ];
 
   constructor(private http: HttpClient) {}
