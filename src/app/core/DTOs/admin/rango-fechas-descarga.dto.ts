@@ -1,4 +1,4 @@
 export interface RangoFechasDescargaDTO {
-    fechaInicio: string;
-    fechaFin: string;
+    fechaInicio: Date;
+    fechaFin: Date;
 }

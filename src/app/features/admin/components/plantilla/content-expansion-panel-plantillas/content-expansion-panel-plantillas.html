@@ -1,0 +1,12 @@
+@if(horarioDias){
+    @for(fecha of horarioDias; track fecha.field){
+        <div class="separar-content">
+            {{fecha.dias}}
+            {{fecha.horario}}
+            @if(fecha.descanso){
+                Descanso: {{fecha.descanso}}
+            }
+        </div>
+    }
+}
+

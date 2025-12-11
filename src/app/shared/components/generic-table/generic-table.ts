@@ -45,13 +45,8 @@ export class GenericTable<T= any> implements AfterViewInit {
   @Input() filtro = false;
 
   @Input() pageSize: number = 5;
-
   @Input() pageSizeOptions:number[] = [5, 10, 20];
 
-
-  /** Eventos de acción */
-  @Output() edit = new EventEmitter<T>();
-  @Output() delete = new EventEmitter<T>();
 
   /** Referencia al paginador */
   @ViewChild(MatPaginator) paginator!: MatPaginator;

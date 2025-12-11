@@ -17,6 +17,7 @@
     </div>
   </div>
 } -->
-
-<app-form-user [usuarioModificar] ="usuarioMod"  (recargarTabla)="recargarTablaForm()" />
+<div class="margin-form">
+  <app-form-user [usuarioModificar] ="usuarioMod"  (recargarTabla)="recargarTablaForm()" />
+</div>
 <app-table-user #tabla (enviarEditar)="ToModificar($event)" />

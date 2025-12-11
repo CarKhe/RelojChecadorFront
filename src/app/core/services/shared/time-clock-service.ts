@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LastRegisterDTO, RegistroAsistenciaDTO } from '../../DTOs/shared/registro-asistencia.dto';
+import { LastRegisterDTO, LastRegisterReturnDTO, RegistroAsistenciaDTO } from '../../DTOs/shared/registro-asistencia.dto';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment.development';
 import { Observable } from 'rxjs';
@@ -18,7 +18,7 @@ export class TimeClockService {
   }
 
   statusAnterior(userData: LastRegisterDTO):Observable<any>{
-    return this.http.post<LastRegisterDTO>(`${this.apiRoute}/lastStatus`,userData);
+    return this.http.post<LastRegisterReturnDTO>(`${this.apiRoute}/lastStatus`,userData);
   }
 
   statusDeshabilitado():boolean{

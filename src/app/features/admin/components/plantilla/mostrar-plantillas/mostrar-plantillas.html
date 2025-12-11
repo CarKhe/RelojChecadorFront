@@ -1,0 +1,25 @@
+<app-generic-card     
+    title="HORARIO PLANTILLAS"
+    maxWidth="100%">
+    <div card-content>
+        <mat-accordion  class="example-headers-align">
+            @for(col of ejemplosHorarioPlantilla; track col.field){
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                    <mat-panel-title> {{col.plantilla}}</mat-panel-title>
+                    <mat-panel-description class="actions-right">
+                        <app-generic-button [emmit]="false" 
+                            color="secondary"
+                            (click)="editar()"
+                            type="icon" icon="edit" />
+                        <app-generic-button [emmit]="false" 
+                            color="secondary"
+                            type="icon" icon="delete" /> 
+                    </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <app-content-expansion-panel-plantillas [idPlantilla]="col.idPlantilla"/>
+                </mat-expansion-panel>
+            }
+        </mat-accordion>
+    </div>
+</app-generic-card>

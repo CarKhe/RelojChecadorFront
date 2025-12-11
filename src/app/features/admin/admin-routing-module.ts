@@ -4,6 +4,7 @@ import { Layout } from '../../core/layout/layout/layout';
 import { AreaModule } from './pages/area-module/area-module';
 import { TimeClockModule } from '../shared/pages/time-clock-module/time-clock-module';
 import { DashboardModule } from './pages/dashboard-module/dashboard-module';
+import { PlantillaModule } from './pages/plantilla-module/plantilla-module';
 
 export const ADMIN_ROUTES: Routes = [
     { 

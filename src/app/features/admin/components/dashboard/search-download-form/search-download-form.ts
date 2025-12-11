@@ -24,13 +24,25 @@ export class SearchDownloadForm {
       fechaFin: [today],
     });
   }
-  descargar(){
+  descargar() {
     const rangoFechas: RangoFechasDescargaDTO = {
       fechaInicio: this.form.value.fechaInicio,
       fechaFin: this.form.value.fechaFin
     };
 
-    this.serviceDashboard.descargar(rangoFechas);
+    this.serviceDashboard.descargar(rangoFechas).subscribe({
+      next: (archivo) => {
+        const url = window.URL.createObjectURL(archivo);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = "Usuarios.xlsx";
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err) => {
+        console.error("Error al descargar:", err);
+      }
+    });
   }
   onRangeChange(range: { start: moment.Moment | null; end: moment.Moment | null }) {
     this.form.patchValue({

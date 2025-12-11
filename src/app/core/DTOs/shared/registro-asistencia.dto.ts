@@ -10,3 +10,8 @@ export interface RegistroAsistenciaDTO {
 export interface LastRegisterDTO {
   idUsuario: number;
 }
+
+export interface LastRegisterReturnDTO{
+  movimiento: number;
+  date: Date;
+}

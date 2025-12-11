@@ -20,9 +20,14 @@ export class AdminDashboardService {
 
   constructor(private http: HttpClient) {}
   private apiRoute = environment.API_ROUTE + "Asistencia";
+  private apiRouteDownload = environment.API_ROUTE + "Downloads";
   
-  descargar(rangoFechas: RangoFechasDescargaDTO){
-    console.log(rangoFechas);
+  descargar(rangoFechas: RangoFechasDescargaDTO) {
+    return this.http.post(
+      this.apiRouteDownload + "/RegistroHoras",   
+      rangoFechas,                       
+      { responseType: 'blob' }           
+    );
   }
     
   GetLastAsistencia(cant: number): Observable<UsuariosUltimosRegistrosDTO[]> {

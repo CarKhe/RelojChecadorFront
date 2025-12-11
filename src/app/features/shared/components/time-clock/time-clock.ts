@@ -20,8 +20,5 @@ export class TimeClock {
     this.clickBoton.emit(this.asistenciaStatus);
   }
 
-  envioStatusBoton(){
-    
-  }
 
 }

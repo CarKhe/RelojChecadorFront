@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Geolocalizacion } from '../../../../core/services/shared/geolocalizacion';
 import { TimeClockService } from '../../../../core/services/shared/time-clock-service';
-import { LastRegisterDTO, RegistroAsistenciaDTO } from '../../../../core/DTOs/shared/registro-asistencia.dto';
+import { LastRegisterDTO, LastRegisterReturnDTO, RegistroAsistenciaDTO } from '../../../../core/DTOs/shared/registro-asistencia.dto';
 import { SnackbarService } from '../../../../shared/services/snackbar';
 import { AuthService } from '../../../../core/services/auth/auth-service';
 import { UserAuthDTO } from '../../../../core/DTOs/auth/auth-user.dto';
@@ -64,21 +64,47 @@ export class TimeClockModule implements OnInit, OnDestroy {
       idUsuario: this.userData.idUser
     }
     this.timeClockService.statusAnterior(statusDTO).subscribe({
-      next: (value) => {
-        if (value === 1) {
+      next: (result: LastRegisterReturnDTO) => {
+        console.log(result);
+        if (result.movimiento === 1) {
           this.asistenciaStatus = false;
+          this.asistenciaStatus = this.esHoy(result.date) ? true : false;
         }
+        this.deshabilitado = this.pasoHora(result.date) ? false : true;
+
       },
       error: (err) => {
         console.error(err);
       },
     });
-
-    this.deshabilitado = this.timeClockService.statusDeshabilitado();
   }
   ngOnDestroy(): void {
     clearInterval(this.timer);
   }
+
+  pasoHora(dateString: Date): boolean {
+    const pastDate = new Date(dateString); 
+    const now = new Date();
+
+    // ignorar milisegundos
+    pastDate.setMilliseconds(0);
+    now.setMilliseconds(0);
+
+    const diffMs = now.getTime() - pastDate.getTime();
+    const diffHours = diffMs / (1000 * 60 * 60);
+    console.log(diffHours);
+    return diffHours >= 1;
+  }
+  esHoy(fecha: Date) {
+    const f = new Date(fecha);
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+    f.setHours(0, 0, 0, 0);
+    const ayer = new Date(hoy);
+    ayer.setDate(ayer.getDate() - 1);
+    return f.getTime() === ayer.getTime();
+  }
+
 
   async registrarAsistencia(tipo: boolean){
     try{

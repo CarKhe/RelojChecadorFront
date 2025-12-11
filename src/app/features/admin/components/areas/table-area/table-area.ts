@@ -42,10 +42,6 @@ export class TableArea implements OnInit {
     });
   }
 
-  editar(area: AreaTableDTO){
-    this.sendToEdit.emit(area);
-  }
-
   eliminar(area: AreaTableDTO){
     this.areaService.toogleAreas(area.id).subscribe({
       next: (data) =>{
