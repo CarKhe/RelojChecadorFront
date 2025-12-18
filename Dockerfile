@@ -25,5 +25,5 @@ COPY --from=builder /app/dist/RelojChecadorApp /usr/share/nginx/html
 # Custom nginx config for SPA routing
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-EXPOSE 80
+EXPOSE 867
 CMD ["nginx", "-g", "daemon off;"]
