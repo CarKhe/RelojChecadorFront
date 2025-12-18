@@ -6,7 +6,7 @@ services:
       args:
         BUILD_CONFIG: production
     ports:
-      - "867:867"
+      - "7676:7676"
     restart: unless-stopped
     environment:
       - NODE_ENV=production
