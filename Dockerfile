@@ -22,6 +22,10 @@ RUN rm -rf /usr/share/nginx/html/*
 # Copy built app from builder - Angular output is at /app/dist/<projectName>
 COPY --from=builder /app/dist/RelojChecadorApp /usr/share/nginx/html
 
+# Set proper permissions for nginx
+RUN chmod -R 755 /usr/share/nginx/html && \
+    chown -R nginx:nginx /usr/share/nginx/html
+
 # Custom nginx config for SPA routing
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
