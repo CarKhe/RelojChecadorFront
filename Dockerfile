@@ -19,8 +19,8 @@ FROM nginx:stable-alpine
 # Remove default nginx static content
 RUN rm -rf /usr/share/nginx/html/*
 
-# Copy built app from builder - Angular output is at /app/dist/<projectName>
-COPY --from=builder /app/dist/RelojChecadorApp /usr/share/nginx/html
+# Copy built app from builder - Angular output is at /app/dist/RelojChecadorApp/browser
+COPY --from=builder /app/dist/RelojChecadorApp/browser /usr/share/nginx/html
 
 # Set proper permissions for nginx
 RUN chmod -R 755 /usr/share/nginx/html && \
