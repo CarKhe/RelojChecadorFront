@@ -5,8 +5,8 @@ services:
       dockerfile: Dockerfile
       args:
         BUILD_CONFIG: production
-      expose:
-        - "7676"
+    ports:
+      - "7676:7676"
     restart: unless-stopped
     environment:
       - NODE_ENV=production
