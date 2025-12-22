@@ -6,7 +6,8 @@ services:
       args:
         BUILD_CONFIG: production
     ports:
-      - "7676:7676"
+      - "80:80"
+      - "443:443"
     restart: unless-stopped
     environment:
       - NODE_ENV=production
@@ -25,3 +26,16 @@ services:
     command: sh -c "npm ci && npm run start -- --host 0.0.0.0 --port 4200"
     stdin_open: true
     tty: true
+
+    certbot:
+      image: certbot/certbot
+      volumes:
+        - ./certbot/conf:/etc/letsencrypt
+        - ./certbot/www:/var/www/certbot
+      entrypoint: ""
+      command: >
+        sh -c "sleep 10 && certbot certonly --webroot --webroot-path=/var/www/certbot \
+        --email tu-email@crclimasyrefacciones.com --agree-tos --no-eff-email \
+        -d crclimasyrefacciones.com -d www.crclimasyrefacciones.com"
+      depends_on:
+        - frontend
