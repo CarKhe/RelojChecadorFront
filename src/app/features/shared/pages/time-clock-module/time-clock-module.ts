@@ -65,7 +65,7 @@ export class TimeClockModule implements OnInit, OnDestroy {
     }
     this.timeClockService.statusAnterior(statusDTO).subscribe({
       next: (result: LastRegisterReturnDTO) => {
-        //console.log(result);
+        console.log(result);
         if (result.movimiento === 1) {
           this.asistenciaStatus = false;
           this.asistenciaStatus = this.esHoy(result.date) ? true : false;
