@@ -65,7 +65,6 @@ export class TimeClockModule implements OnInit, OnDestroy {
     }
     this.timeClockService.statusAnterior(statusDTO).subscribe({
       next: (result: LastRegisterReturnDTO) => {
-        console.log(result);
         if (result.movimiento === 1) {
           this.asistenciaStatus = false;
           this.asistenciaStatus = this.esHoy(result.date) ? true : false;
@@ -92,7 +91,6 @@ export class TimeClockModule implements OnInit, OnDestroy {
 
     const diffMs = now.getTime() - pastDate.getTime();
     const diffHours = diffMs / (1000 * 60 * 60);
-    console.log(diffHours);
     return diffHours >= 1;
   }
   esHoy(fecha: Date) {
