@@ -9,7 +9,7 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class GenericAvatarDisplay {
   /** Imagen del usuario o logo */
-  @Input() src: string = '';
+  @Input() src: string = 'rrlogo.jpg';
 
   /** Texto alternativo */
   @Input() alt: string = 'Avatar';
