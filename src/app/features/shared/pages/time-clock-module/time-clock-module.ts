@@ -126,7 +126,7 @@ export class TimeClockModule implements OnInit, OnDestroy {
         error: (err) => {
           if (err.status === 400) {
             this.snackBar.error(err.errores|| err.mensaje || 'Error desconocido');
-            this.asistenciaStatus = !tipo;
+            this.asistenciaStatus = tipo;
 
           } else{
             this.snackBar.error(err.message);
