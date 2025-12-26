@@ -16,7 +16,6 @@ export class TimeClock {
   @Output() clickBoton = new EventEmitter<boolean>();
 
   registrarAsistencia() {
-    console.log('Botón de registrar asistencia clickeado');
     this.asistenciaStatus = !this.asistenciaStatus;
     this.clickBoton.emit(this.asistenciaStatus);
   }
