@@ -124,7 +124,12 @@ export class TimeClockModule implements OnInit, OnDestroy {
           this.deshabilitado = true;
         },
         error: (err) => {
-          this.snackBar.error(err.message);
+          if (err.status === 400) {
+            this.snackBar.error("Hay error");
+          } 
+          else {
+            this.snackBar.error(err.message);
+          }
         }
       });
     } catch(error){
