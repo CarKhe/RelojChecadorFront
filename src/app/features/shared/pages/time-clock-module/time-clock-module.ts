@@ -125,11 +125,12 @@ export class TimeClockModule implements OnInit, OnDestroy {
         },
         error: (err) => {
           if (err.status === 400) {
-            this.snackBar.error(err.error.errores[0]|| 'Error desconocido');
+            this.snackBar.error(err.error.errores[0] || 'Error desconocido');
             this.deshabilitado = true;
-            //window.location.reload(); 
-
-          } else{
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000); 
+          } else {
             this.snackBar.error(err.message);
           }
         }
