@@ -86,7 +86,7 @@ export class TimeClockModule implements OnInit, OnDestroy {
         console.error(err);
       },
     });
-    this.cargando = false;
+    
   }
   ngOnDestroy(): void {
     clearInterval(this.timer);
@@ -102,7 +102,7 @@ export class TimeClockModule implements OnInit, OnDestroy {
     const diffMinutes = diffMs / (1000 * 60);
     return diffMinutes >= minutos;
   }
-  
+
   esHoy(fecha: Date) {
     const f = new Date(fecha);
     const hoy = new Date();
