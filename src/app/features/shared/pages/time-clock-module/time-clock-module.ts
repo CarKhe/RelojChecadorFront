@@ -86,6 +86,7 @@ export class TimeClockModule implements OnInit, OnDestroy {
         console.error(err);
       },
     });
+    this.cargando = false;
   }
   ngOnDestroy(): void {
     clearInterval(this.timer);
