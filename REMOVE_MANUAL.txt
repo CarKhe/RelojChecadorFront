@@ -1,0 +1,6 @@
+Elimina manualmente estos archivos para quitar completamente Angular PWA:
+- src/manifest.webmanifest
+- public/manifest.webmanifest (si existe)
+- ngsw-config.json
+- Revisa y elimina referencias a service worker en main.ts si existen.
+- Puedes eliminar @angular/service-worker de package.json si no lo usarás más.
