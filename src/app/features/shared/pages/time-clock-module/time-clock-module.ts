@@ -80,7 +80,7 @@ export class TimeClockModule implements OnInit, OnDestroy {
           this.asistenciaStatus = this.esHoy(result.date) ? true : false;
         }
         this.deshabilitado = this.pasoTiempo(result.date, 15) ? false : true;
-
+        this.cargando = false;
       },
       error: (err) => {
         console.error(err);
