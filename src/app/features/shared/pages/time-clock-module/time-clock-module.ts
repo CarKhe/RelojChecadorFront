@@ -79,7 +79,7 @@ export class TimeClockModule implements OnInit, OnDestroy {
           this.asistenciaStatus = false;
           this.asistenciaStatus = this.esHoy(result.date) ? true : false;
         }
-        this.deshabilitado = this.pasoHora(result.date) ? false : true;
+        this.deshabilitado = this.pasoTiempo(result.date, 15) ? false : true;
 
       },
       error: (err) => {
@@ -92,18 +92,17 @@ export class TimeClockModule implements OnInit, OnDestroy {
     clearInterval(this.timer);
   }
 
-  pasoHora(dateString: Date): boolean {
-    const pastDate = new Date(dateString); 
+  pasoTiempo(dateString: Date, minutos: number = 60): boolean {
+    const pastDate = new Date(dateString);
     const now = new Date();
-
     // ignorar milisegundos
     pastDate.setMilliseconds(0);
     now.setMilliseconds(0);
-
     const diffMs = now.getTime() - pastDate.getTime();
-    const diffHours = diffMs / (1000 * 60 * 60);
-    return diffHours >= 1;
+    const diffMinutes = diffMs / (1000 * 60);
+    return diffMinutes >= minutos;
   }
+  
   esHoy(fecha: Date) {
     const f = new Date(fecha);
     const hoy = new Date();
