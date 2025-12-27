@@ -9,10 +9,12 @@ import { LastRegisterDTO, LastRegisterReturnDTO, RegistroAsistenciaDTO } from '.
 import { SnackbarService } from '../../../../shared/services/snackbar';
 import { AuthService } from '../../../../core/services/auth/auth-service';
 import { UserAuthDTO } from '../../../../core/DTOs/auth/auth-user.dto';
+import { GenericLoader } from "../../../../shared/components/generic-loader/generic-loader";
+import { LoaderService } from '../../../../shared/services/loader-service';
 
 @Component({
   selector: 'app-time-clock-module',
-  imports: [CommonModule,TimeClock,MatGridListModule ],
+  imports: [CommonModule, TimeClock, MatGridListModule, GenericLoader],
   templateUrl: './time-clock-module.html',
   styleUrl: './time-clock-module.scss',
 })
@@ -23,15 +25,23 @@ export class TimeClockModule implements OnInit, OnDestroy {
   deshabilitado: boolean = false;
   asistenciaStatus: boolean = true;
   userData: UserAuthDTO | null = null;
+  cargando = false;
 
   constructor(
+    private loader: LoaderService,
     private breakpointObserver: BreakpointObserver,
     private geolocalizacion: Geolocalizacion,
     private timeClockService: TimeClockService,
     private snackBar: SnackbarService,
-    private auth: AuthService ) {}
+    private auth: AuthService ) {
+
+      this.loader.loading$.subscribe(valor => {
+        this.cargando = valor;
+      });
+    }
 
   ngOnInit(): void {
+      this.cargando = true;
       this.timer = setInterval(() => {
         this.currentTime = new Date();
     }, 1000);
@@ -105,6 +115,7 @@ export class TimeClockModule implements OnInit, OnDestroy {
 
 
   async registrarAsistencia(tipo: boolean){
+    this.cargando = true;
     try{
       const pos = await this.geolocalizacion.obtenerUbicacion();
       const lat = pos.coords.latitude;
@@ -138,6 +149,7 @@ export class TimeClockModule implements OnInit, OnDestroy {
     } catch(error){
        console.error('Error al obtener ubicación:', error);
     }
+    this.cargando = false;
   }
   
 }
