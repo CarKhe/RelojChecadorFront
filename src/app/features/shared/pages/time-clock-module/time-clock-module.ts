@@ -41,8 +41,8 @@ export class TimeClockModule implements OnInit, OnDestroy {
     }
 
   ngOnInit(): void {
-      this.cargando = true;
-      this.timer = setInterval(() => {
+    this.cargando = true;
+    this.timer = setInterval(() => {
         this.currentTime = new Date();
     }, 1000);
     
@@ -116,6 +116,7 @@ export class TimeClockModule implements OnInit, OnDestroy {
 
 
   async registrarAsistencia(tipo: boolean){
+    this.deshabilitado = true;
     this.cargando = true;
     try{
       const pos = await this.geolocalizacion.obtenerUbicacion();
@@ -132,13 +133,11 @@ export class TimeClockModule implements OnInit, OnDestroy {
       };
       this.timeClockService.enviarDatos(datos).subscribe({
         next: (data) => {
-          this.deshabilitado = true;
           this.snackBar.success(data.mensaje);
         },
         error: (err) => {
           if (err.status === 400) {
             this.snackBar.error(err.error.errores[0] || 'Error desconocido');
-            this.deshabilitado = true;
             setTimeout(() => {
               window.location.reload();
             }, 2000); 
