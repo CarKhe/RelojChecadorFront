@@ -56,7 +56,6 @@ export class LastRegistersTable implements OnInit, OnDestroy {
 
     // Solo actualiza si hay diferencias reales
     if (actual !== nuevo) {
-      console.log('Cambios detectados, actualizando tabla...');
       this.usuarios = nuevosUsuarios;
     } 
   }
