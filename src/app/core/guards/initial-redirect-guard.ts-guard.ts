@@ -25,6 +25,7 @@ export const initialRedirectGuardTsGuard: CanActivateFn = (route, state) => {
       break;
 
     default:
+      console.log("No jalo");
       router.navigate(['/auth']);
       break;
   }
