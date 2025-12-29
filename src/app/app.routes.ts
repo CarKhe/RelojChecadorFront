@@ -1,9 +1,14 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
 import { roleGuard } from './core/guards/role-guard';
+import { initialRedirectGuardTsGuard } from './core/guards/initial-redirect-guard.ts-guard';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/auth', pathMatch: 'full' },
+      {
+        path: '',
+        canActivate: [initialRedirectGuardTsGuard],
+        pathMatch: 'full'
+    },
     {
         path: 'auth',
         loadChildren: () =>
