@@ -13,7 +13,7 @@ export const initialRedirectGuardTsGuard: CanActivateFn = (route, state) => {
   }
   const parsedUser = JSON.parse(user);
   console.log(parsedUser);
-  switch (parsedUser.role) {
+  switch (parsedUser.rol) {
     case 'admin':
       router.navigate(['/admin']);
       break;
