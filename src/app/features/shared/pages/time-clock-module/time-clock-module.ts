@@ -75,9 +75,11 @@ export class TimeClockModule implements OnInit, OnDestroy {
     }
     this.timeClockService.statusAnterior(statusDTO).subscribe({
       next: (result: LastRegisterReturnDTO) => {
+        console.log(result);
         if (result.movimiento === 1) {
           this.asistenciaStatus = false;
-          this.asistenciaStatus = this.esHoy(result.date) ? true : false;
+          //Si no es hoy, entonces se registra como entrada
+          this.asistenciaStatus = this.esHoy(result.date) ? false : true;
         }
         this.deshabilitado = this.pasoTiempo(result.date, 15) ? false : true;
         this.cargando = false;
@@ -103,14 +105,14 @@ export class TimeClockModule implements OnInit, OnDestroy {
     return diffMinutes >= minutos;
   }
 
-  esHoy(fecha: Date) {
+  esHoy(fecha: Date): boolean {
     const f = new Date(fecha);
     const hoy = new Date();
-    hoy.setHours(0, 0, 0, 0);
+
+    // Normalizar ambas fechas
     f.setHours(0, 0, 0, 0);
-    const ayer = new Date(hoy);
-    ayer.setDate(ayer.getDate() - 1);
-    return f.getTime() === ayer.getTime();
+    hoy.setHours(0, 0, 0, 0);
+    return f.getTime() === hoy.getTime();
   }
 
 
