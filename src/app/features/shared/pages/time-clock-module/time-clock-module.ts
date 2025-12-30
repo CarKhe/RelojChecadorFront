@@ -81,7 +81,7 @@ export class TimeClockModule implements OnInit, OnDestroy {
           //Si no es hoy, entonces se registra como entrada
           this.asistenciaStatus = this.esHoy(result.date) ? false : true;
         }
-        this.deshabilitado = this.pasoTiempo(result.date, 15) ? false : true;
+        this.deshabilitado = this.pasoTiempo(result.date, 3) ? false : true;
         this.cargando = false;
       },
       error: (err) => {
@@ -132,6 +132,7 @@ export class TimeClockModule implements OnInit, OnDestroy {
         idArea: 0,
         dentroZona: 0
       };
+      alert(JSON.stringify(datos));
       this.timeClockService.enviarDatos(datos).subscribe({
         next: (data) => {
           this.snackBar.success(data.mensaje);
