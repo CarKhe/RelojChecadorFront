@@ -18,7 +18,8 @@ export class LayoutService {
         ];
       case "user":
         return [
-          { label: 'reloj', icon: 'check_box', route: 'time' }
+          { label: 'reloj', icon: 'check_box', route: 'time' },
+          { label: 'mis asistencias', icon: 'list_alt', route: 'misAsistencias' }
         ];
       default:
         return [];
