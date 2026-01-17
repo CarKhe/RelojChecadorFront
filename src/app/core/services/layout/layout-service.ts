@@ -12,6 +12,7 @@ export class LayoutService {
       case "admin":
         return [
           { label: 'asistencias', icon: 'check_box', route: 'dashboard' },
+          { label: 'mis asistencias', icon: 'list_alt', route: 'misAsistencias' },
           { label: 'areas', icon: 'map', route: 'area' },
           { label: 'usuarios', icon: 'assignment_ind', route: 'user' },
           { label: 'reloj', icon: 'check_box', route: 'time' }
