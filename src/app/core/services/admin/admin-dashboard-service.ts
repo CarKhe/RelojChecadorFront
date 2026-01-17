@@ -34,7 +34,10 @@ export class AdminDashboardService {
     return this.http.get<UsuariosUltimosRegistrosDTO[]>(`${this.apiRoute}/last/${cant}`);
   }
 
-  
+  GetMisAsistencias(cant: number, idUser: number): Observable<UsuariosUltimosRegistrosDTO[]> {
+    return this.http.get<UsuariosUltimosRegistrosDTO[]>(`${this.apiRoute}/lastByUser/${idUser}/${cant}`);
+  }
+
   getColumnas(): Observable<ColumnasDTO[]> {
     return of(this.columnas);
   }
